@@ -6,6 +6,7 @@ import Muscles from './pages/Muscles';
 import Workouts from './pages/WorkOuts';
 import Exercises from './pages/Exercises';
 import ExerciseDetail from './pages/ExerciseDetail';
+import ExerciseCreate from './pages/ExerciseCreate';
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/exercises" element={<Exercises />} />
+        <Route path="/exercises/create" element={<ExerciseCreate />} />
         <Route path="/exercises/:id" element={<ExerciseDetail />} />
         <Route path="/muscles" element={<Muscles />} />
         <Route path="/workouts" element={<Workouts />} />

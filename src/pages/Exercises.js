@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import ExerciseCard from "../components/ExerciseCard";
+import { Spinner } from "react-bootstrap";
 
 function Exercises() {
   const [exercises, setExercises] = useState(null);
-  const imageLoading = "https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921"
 
   const getAllExercises = () => {
     axios
@@ -29,12 +29,9 @@ function Exercises() {
         exercises.map((exercise) => (
           <ExerciseCard key={exercise._id} {...exercise} />
         ))
-      ) : (
-        <img
-          src={imageLoading}
-          alt="Loading"
-        />
-      )}
+      ) : 
+        <Spinner animation="border" />
+      }
     </>
   );
 }
