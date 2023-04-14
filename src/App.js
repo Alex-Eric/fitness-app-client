@@ -6,9 +6,9 @@ import Muscles from './pages/Muscles';
 import Workouts from './pages/WorkOuts';
 import Exercises from './pages/Exercises';
 import ExerciseDetail from './pages/ExerciseDetail';
-import WorkOutsCreate from './pages/WorkOutsCreate';
 import ExerciseCreate from './pages/ExerciseCreate';
-
+import WorkOutsCreate from './pages/WorkOutsCreate';
+import WorkOutsEdit from './pages/WorkOutsEdit';
 
 function App() {
   return (
@@ -22,6 +22,7 @@ function App() {
         <Route path="/muscles" element={<Muscles />} />
         <Route path="/workouts" element={<Workouts />} />
         <Route path="/workouts/create" element={<WorkOutsCreate />} />
+        <Route path="/workouts/:id/edit" element={<WorkOutsEdit />} />
       </Routes>
     </div>
   );
