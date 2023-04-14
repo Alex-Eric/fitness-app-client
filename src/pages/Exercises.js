@@ -14,6 +14,7 @@ function Exercises() {
       )
       .then((response) => {
         setExercises(response.data);
+        console.log(response.data)
       })
       .catch((error) => {
         console.log("error: ", error);

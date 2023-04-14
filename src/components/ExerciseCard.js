@@ -8,11 +8,11 @@ function ExerciseCard(props) {
       <Card
         style={{
           width: "20rem",
-          height: "30rem",
+          height: "25rem",
           padding: "20px",
           margin: "5px",
           display: "inline-block",
-          overflow: "scroll",
+          overflow: "hidden",
           textDecoration: "none",
           color: "black"
         }}
@@ -23,7 +23,6 @@ function ExerciseCard(props) {
         />
         <Card.Body>
           <Card.Title>{props.name}</Card.Title>
-          <Card.Text>{props.description}</Card.Text>
         </Card.Body>
       </Card>
     </Link>
