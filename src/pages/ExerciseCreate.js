@@ -6,6 +6,9 @@ import { useNavigate } from "react-router-dom";
 function ExerciseCreate() {
   const [name, setName] = useState("");
   const [type, setType] = useState("");
+  const [description,setDescription] = useState("")
+
+  const [validated, setValidated] = useState(false);
   const navigate = useNavigate();
   const types = [
     "strength",
@@ -17,56 +20,26 @@ function ExerciseCreate() {
     "plyometrics",
   ];
 
-  const handleSubmit = () => {
-    console.log({ name, type });
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    setValidated(true);
     axios
-      .post(`${process.env.REACT_APP_API_URL}/exercises/create`, { name, type })
+      .post(`${process.env.REACT_APP_API_URL}/exercises/create`, { name, type, description })
       .then(() => {
         console.log("IN");
         navigate("/exercises");
       })
       .catch((err) => console.log("Error: ", err));
-  };
+    }
+
+    
+    console.log({ name, type , description});
 
   return (
     <>
-      <h1>CREATE</h1>
-      {/* <form>
-        <label>Name</label>
-        <br />
-        <input
-          type="text"
-          name="name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />{" "}
-        <br />
-        <label>Type</label>
-        <br />
-        <select
-          name="type"
-          value={type}
-          onChange={(e) => setType(e.target.value)}
-        >
-          {types ? (
-            types.map((element) => (
-              <option key={element._id} value={element}>
-                {element
-                  .split("_")
-                  .map((e) => e.charAt().toUpperCase() + e.slice(1))
-                  .join(" ")}
-              </option>
-            ))
-          ) : (
-            <Spinner animation="border" />
-          )}
-        </select>{" "}
-        <br />
-        <Button variant="danger" onClick={handleSubmit}>
-          Create
-        </Button>
-      </form> */}
-      <Form style={{ margin: "0 20%" }}>
+      <h1>Create an exercise!</h1>
+      <Form style={{ margin: "0 20%" }} noValidate validated={validated} onSubmit={handleSubmit}>
         <FloatingLabel
           controlId="floatingInput"
           label="Exercise name"
@@ -80,6 +53,8 @@ function ExerciseCreate() {
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
+          <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+          <Form.Control.Feedback type="invalid">Please provide a name</Form.Control.Feedback>
         </FloatingLabel>
 
         <FloatingLabel controlId="floatingSelect" label="Exercise's type">
@@ -107,11 +82,30 @@ function ExerciseCreate() {
               <Spinner animation="border" />
             )}
           </Form.Select>
+          <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+          <Form.Control.Feedback type="invalid">Please choose a type</Form.Control.Feedback>
+        </FloatingLabel> <br />
+        <FloatingLabel
+        controlId="floatingInput"
+        label="Exercise intructions"
+        className="mb-3"
+        >
+          <Form.Control
+              required
+              rows={4}
+          as="textarea"
+            placeholder=" "
+            name="description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+          <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+          <Form.Control.Feedback type="invalid">Please provide instructions</Form.Control.Feedback>
         </FloatingLabel>
         <br />
         <Button
           variant="danger"
-          onClick={handleSubmit}
+          type="submit"
           style={{ width: "30%" }}
         >
           Create

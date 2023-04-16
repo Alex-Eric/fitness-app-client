@@ -6,7 +6,7 @@ import { LinkContainer } from "react-router-bootstrap";
 
 function NavbarF() {
   return (
-    <Navbar bg="light" expand="lg" style={{position:"sticky",top:"0px", "z-index": "1100"}}>
+    <Navbar bg="light" expand="lg" sticky="top" collapseOnSelect>
       <Container>
         <Navbar.Brand>Fitness App</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

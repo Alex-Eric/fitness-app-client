@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Card, Spinner } from "react-bootstrap";
+import {  Spinner } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 
 function ExerciseDetail() {
@@ -29,7 +29,7 @@ function ExerciseDetail() {
       {exercise ? (
         <>
           <h1>{exercise.name}</h1>
-          <h3>Type: {exercise.type.split("_").map(e=>e.charAt().toUpperCase()+e.slice(1)).join(" ")}</h3>
+          <h5>{exercise.type.split("_").map(e=>e.charAt().toUpperCase()+e.slice(1)).join(" ")}</h5>
           <p style={{margin:"20px 20%","line-height":"1.5"}}>{exercise.description}</p>
         </>
       ) : (

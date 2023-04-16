@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 function ExerciseCard(props) {
   const id = props._id;
   return (
-    <Link to={`/exercises/${id}`}>
+    <Link to={`/exercises/${id}`} >
       <Card
         style={{
           width: "20rem",
@@ -16,6 +16,7 @@ function ExerciseCard(props) {
           textDecoration: "none",
           color: "black"
         }}
+        className="w100 hover-shadow"
       >
         <Card.Img
           variant="top"
