@@ -1,25 +1,40 @@
-import Accordion from "react-bootstrap/Accordion";
-import { Link } from "react-router-dom";
+import { Accordion } from "react-bootstrap";
+import { Link, useParams } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { Button } from "react-bootstrap";
 
 function WorkoutAccordion(props) {
+  const id = props.workout._id;
+
+  const navigate = useNavigate();
+
+  const handleDelete = () => {
+    axios
+      .delete(`${process.env.REACT_APP_API_URL}/workouts/${id}`)
+      .then(() => {
+        props.setDeleteCheckcallback(true);
+      })
+      .catch((e) => {
+        console.log("error...", e);
+      });
+  };
   return (
-    <Accordion defaultActiveKey="0">
-      {props.workouts.map((element) => {
-        return (
-          <Accordion.Item eventKey={element._id}>
-            <Accordion.Header>{element.name}</Accordion.Header>
-            <Accordion.Body>
-                Series: {element.series}
-                <br />
-                {element.exercises.length>0 &&
-                  `Exercises: ${element.exercises}` + <br /> }
-                {element.description}
-                <Link to={`/workouts/${element._id}/edit`}>Edit</Link>
-            </Accordion.Body>
-          </Accordion.Item>
-        )
-      })}
-    </Accordion>
+    <Accordion.Item eventKey={props.workout._id}>
+      <Accordion.Header>{props.workout.name}</Accordion.Header>
+      <Accordion.Body>
+        Series: {props.workout.series}
+        <br />
+        {props.workout.exercises.length > 0 &&
+          `Exercises: ${props.workout.exercises}` + <br />}
+        {props.workout.description}
+        <br />
+        <Button component={Link} to={`/workouts/${props.workout._id}/edit`}>
+          Edit
+        </Button>
+        <Button onClick={handleDelete}>Delete</Button>
+      </Accordion.Body>
+    </Accordion.Item>
   );
 }
 
