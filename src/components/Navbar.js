@@ -36,18 +36,10 @@ function NavbarF() {
                   <NavDropdown.Item>My Exercises</NavDropdown.Item>
                 </LinkContainer>
               </NavDropdown>
-              <NavDropdown title="Workouts">
-                <LinkContainer to="/workouts">
-                  <NavDropdown.Item>List</NavDropdown.Item>
-                </LinkContainer>
-                <LinkContainer to="/workouts/create">
-                  <NavDropdown.Item>Create</NavDropdown.Item>
-                </LinkContainer>
-                <NavDropdown.Divider />
-                <LinkContainer to="/workouts/my">
-                  <NavDropdown.Item>My Workouts</NavDropdown.Item>
-                </LinkContainer>
-              </NavDropdown>
+
+              <LinkContainer to="/Workouts">
+                <Nav.Link>Workouts</Nav.Link>
+              </LinkContainer>
             </div>
             <div>
               {isLoggedIn ? (

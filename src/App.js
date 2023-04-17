@@ -8,7 +8,6 @@ import Exercises from './pages/Exercises';
 import ExerciseDetail from './pages/ExerciseDetail';
 import ExerciseCreate from './pages/ExerciseCreate';
 import WorkOutsCreate from './pages/WorkOutsCreate';
-import WorkOutsEdit from './pages/WorkOutsEdit';
 import Login from './pages/Login';
 import Register from './pages/Register';
 
@@ -24,7 +23,6 @@ function App() {
         <Route path="/muscles" element={<Muscles />} />
         <Route path="/workouts" element={<Workouts />} />
         <Route path="/workouts/create" element={<WorkOutsCreate />} />
-        <Route path="/workouts/:id/edit" element={<WorkOutsEdit />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Routes>

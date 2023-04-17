@@ -1,13 +1,14 @@
 import { Accordion } from "react-bootstrap";
-import { Link, useParams } from "react-router-dom";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
+import { useState } from "react";
+import WorkoutEdit from "./WorkoutEdit";
 
 function WorkoutAccordion(props) {
-  const id = props.workout._id;
+  const [update, setUpdate] = useState(false);
+  const [editBtn, setEditBtn] = useState("Edit");
 
-  const navigate = useNavigate();
+  const id = props.workout._id;
 
   const handleDelete = () => {
     axios
@@ -23,16 +24,29 @@ function WorkoutAccordion(props) {
     <Accordion.Item eventKey={props.workout._id}>
       <Accordion.Header>{props.workout.name}</Accordion.Header>
       <Accordion.Body>
-        Series: {props.workout.series}
-        <br />
-        {props.workout.exercises.length > 0 &&
-          `Exercises: ${props.workout.exercises}` + <br />}
-        {props.workout.description}
-        <br />
-        <Button component={Link} to={`/workouts/${props.workout._id}/edit`}>
-          Edit
+        {!update && (
+          <>
+            Series: {props.workout.series}
+            <br />
+            {props.workout.exercises.length > 0 &&
+              `Exercises: ${props.workout.exercises}` + <br />}
+            {props.workout.description}
+            <br />
+          </>
+        )}
+        {update && <WorkoutEdit workout={props.workout} setEditCheckcallback={props.setEditCheckcallback} />}
+        <Button
+          onClick={() =>
+            update
+              ? (setUpdate(false), setEditBtn("Edit"))
+              : (setUpdate(true), setEditBtn("Back"))
+          }
+        >
+          {editBtn}
         </Button>
-        <Button onClick={handleDelete}>Delete</Button>
+        <Button variant="danger" onClick={handleDelete}>
+          Delete
+        </Button>
       </Accordion.Body>
     </Accordion.Item>
   );
