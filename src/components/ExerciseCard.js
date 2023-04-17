@@ -16,7 +16,6 @@ function ExerciseCard(props) {
           textDecoration: "none",
           color: "black"
         }}
-        className="w100 hover-shadow"
       >
         <Card.Img
           variant="top"
