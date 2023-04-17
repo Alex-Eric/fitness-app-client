@@ -32,6 +32,12 @@ function NavbarF() {
               <NavDropdown.Divider />
               <LinkContainer to="/workouts/my"><NavDropdown.Item>My Workouts</NavDropdown.Item></LinkContainer>
             </NavDropdown>
+            <LinkContainer to="/login">
+              <Nav.Link>Login</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/register">
+              <Nav.Link>Register</Nav.Link>
+            </LinkContainer>
           </Nav>
         </Navbar.Collapse>
       </Container>
