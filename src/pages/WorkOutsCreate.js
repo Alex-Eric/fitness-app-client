@@ -1,13 +1,15 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Button, Spinner, Form, FloatingLabel } from "react-bootstrap";
 
 function WorkOutsCreate() {
     const [name, setName] = useState("")
     const [series, setSeries] = useState("")
     const [description,setDescription] = useState("")
+    const [validated, setValidated] = useState(false);
     const navigate = useNavigate();
-  function handleData(event) {
+  function handleSubmit(event) {
     event.preventDefault();
     const workOutData = {
         name,
@@ -27,44 +29,66 @@ function WorkOutsCreate() {
 
   return (
     <>
-      <h1>WorkOuts Create</h1>
-      <form onSubmit={handleData}>
-        <label>Name:</label>
+      <h1>Create a Workout!</h1>
+      <Form style={{ margin: "0 20%" }} noValidate validated={validated} onSubmit={handleSubmit}>
+        <FloatingLabel
+          controlId="floatingInput"
+          label="Exercise name"
+          className="mb-3"
+        >
+          <Form.Control
+            required
+            type="text"
+            placeholder=" "
+            name="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+          <Form.Control.Feedback type="invalid">Please provide a name</Form.Control.Feedback>
+        </FloatingLabel>
 
+        <FloatingLabel
+          controlId="floatingInput"
+          label="Series"
+          className="mb-3"
+        >
+          <Form.Control
+            required
+            type="number"
+            name="series"
+            value={series}
+            onChange={(e) => setSeries(e.target.value)}
+          />
+          <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+          <Form.Control.Feedback type="invalid">Please provide a name</Form.Control.Feedback>
+        </FloatingLabel>
+        <FloatingLabel
+        controlId="floatingInput"
+        label="Exercise intructions"
+        className="mb-3"
+        >
+          <Form.Control
+              required
+              rows={4}
+          as="textarea"
+            placeholder=" "
+            name="description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+          <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+          <Form.Control.Feedback type="invalid">Please provide instructions</Form.Control.Feedback>
+        </FloatingLabel>
         <br />
-        <input
-          type="text"
-          name="name"
-          value={name}
-          onChange={(event) => setName(event.target.value)}
-        />
-
-        <br />
-
-        <label>Series:</label>
-
-        <br />
-        <input
-          type="number"
-          name="series"
-          value={series}
-          onChange={(event) => setSeries(event.target.value)}
-        />
-
-        <br />
-
-        <label>Description:</label>
-
-        <br />
-        <input
-          type="text"
-          name="Description"
-          value={description}
-          onChange={(event) => setDescription(event.target.value)}
-        />
-        <br />
-        <button>Create</button>
-      </form>
+        <Button
+          variant="danger"
+          type="submit"
+          style={{ width: "30%" }}
+        >
+          Create
+        </Button>
+      </Form>
     </>
   );
 }
