@@ -1,18 +1,19 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Button, Spinner } from "react-bootstrap";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ExerciseForm from "../components/ExerciseForm";
 
-function ExerciseDetail() {
+function ExerciseDetail(props) {
   const [name, setName] = useState("");
   const [type, setType] = useState("");
   const [description, setDescription] = useState("");
   const [validated, setValidated] = useState(false);
 
-  const { id } = useParams();
+  const { id } = props;
   const [exercise, setExercise] = useState(null);
-  const [update, setUpdate] = useState(false);
+  const [update, setUpdate] = useState(true);
+  const [updateName, setUpdateName] = useState("Update");
   const [deleteSure, setDeleteSure] = useState(false);
   const navigate = useNavigate();
   const getExercise = () => {
@@ -33,10 +34,9 @@ function ExerciseDetail() {
   };
   useEffect(() => {
     getExercise();
-  }, [update]);
+  }, [update, id]);
 
   const handleDelete = () => {
-
     axios
       .delete(`${process.env.REACT_APP_API_URL}/exercises/${id}`)
       .then((response) => {
@@ -46,46 +46,52 @@ function ExerciseDetail() {
       .catch((error) => {
         console.log("error: ", error);
       });
-      setDeleteSure(false)
+    setDeleteSure(false);
   };
 
   return (
     <>
       {exercise ? (
         <>
-          <h1>{exercise.name}</h1>
-          <h5>
-            {exercise.type
-              .split("_")
-              .map((e) => e.charAt().toUpperCase() + e.slice(1))
-              .join(" ")}
-          </h5>
-          <p style={{ margin: "20px 20%", "line-height": "1.5" }}>
-            {exercise.description}
-          </p>
-          {update && (
-            <ExerciseForm
-              key={exercise._id}
-              id={exercise._id}
-              name={name}
-              setNameCallback={setName}
-              type={type}
-              setTypeCallback={setType}
-              description={description}
-              setDescriptionCallback={setDescription}
-              validated={validated}
-              setValidatedCallback={setValidated}
-              setUpdateCallback={setUpdate}
-              buttonName={"Send"}
-              submit={"update"}
-            />
+          {update ? (
+            <>
+              <h1>{exercise.name}</h1>
+              <h5>
+                {exercise.type
+                  .split("_")
+                  .map((e) => e.charAt().toUpperCase() + e.slice(1))
+                  .join(" ")}
+              </h5>
+              <p style={{ margin: "20px 20%", "line-height": "1.5" }}>
+                {exercise.description}
+              </p>
+            </>
+          ) : (
+            <>
+              <h1>Update!</h1>
+              <ExerciseForm
+                key={exercise._id}
+                id={exercise._id}
+                name={name}
+                setNameCallback={setName}
+                type={type}
+                setTypeCallback={setType}
+                description={description}
+                setDescriptionCallback={setDescription}
+                validated={validated}
+                setValidatedCallback={setValidated}
+                setUpdateCallback={setUpdate}
+                buttonName={"Send"}
+                submit={"update"}
+              />
+            </>
           )}
           <Button
             variant="danger"
             style={{ width: "20%", "margin-right": "20px" }}
-            onClick={() => (update ? setUpdate(false) : setUpdate(true))}
+            onClick={() => (update ? <>{setUpdate(false)} {setUpdateName("Back")}</> : <>{setUpdate(true)} {setUpdateName("Update")}</>)}
           >
-            Update
+            {updateName}
           </Button>
           {deleteSure ? (
             <Button
@@ -99,7 +105,7 @@ function ExerciseDetail() {
             <Button
               variant="danger"
               style={{ width: "20%" }}
-              onClick={()=>setDeleteSure(true)}
+              onClick={() => setDeleteSure(true)}
             >
               Delete
             </Button>

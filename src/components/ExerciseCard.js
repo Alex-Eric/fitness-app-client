@@ -4,7 +4,12 @@ import { Link } from "react-router-dom";
 function ExerciseCard(props) {
   const id = props._id;
   return (
-    <Link to={`/exercises/${id}`} >
+    <Link
+      onClick={() => {
+        props.setIdCallback(id)
+        props.setDisplayExerciseCallback(true);
+      }}
+    >
       <Card
         style={{
           width: "20rem",
@@ -14,7 +19,7 @@ function ExerciseCard(props) {
           display: "inline-block",
           overflow: "hidden",
           textDecoration: "none",
-          color: "black"
+          color: "black",
         }}
       >
         <Card.Img

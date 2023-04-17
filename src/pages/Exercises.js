@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import ExerciseCard from "../components/ExerciseCard";
-import { Spinner } from "react-bootstrap";
+import { Button, Spinner } from "react-bootstrap";
+import ExerciseDetail from "./ExerciseDetail";
 
 function Exercises() {
   const [exercises, setExercises] = useState(null);
+  const [id, setId] = useState("");
+  const [displayExercise, setDisplayExercise] = useState(false);
 
   const getAllExercises = () => {
     axios
@@ -14,7 +17,6 @@ function Exercises() {
       )
       .then((response) => {
         setExercises(response.data);
-        console.log(response.data)
       })
       .catch((error) => {
         console.log("error: ", error);
@@ -26,13 +28,45 @@ function Exercises() {
   return (
     <>
       <h1>Exercises!</h1>
-      {exercises ? (
+      {displayExercise ? (
+        exercises ? (
+          <div>
+            <br />
+            <div style={{ display: "flex" }}>
+              <div style={{ width: "60%" }}>
+                {exercises.map((exercise) => {
+                  console.log(exercise);
+                  return (
+                    <ExerciseCard
+                      key={exercise._id}
+                      {...exercise}
+                      setIdCallback={setId}
+                      setDisplayExerciseCallback={setDisplayExercise}
+                    />
+                  );
+                })}
+              </div>
+              <div style={{ width: "40%" ,"position":"fixed","right":"0px"}}>
+              <Button variant="danger" onClick={() => setDisplayExercise(false)}>Back</Button>
+                <ExerciseDetail id={id} />
+              </div>
+            </div>
+          </div>
+        ) : (
+          <Spinner animation="border" />
+        )
+      ) : exercises ? (
         exercises.map((exercise) => (
-          <ExerciseCard key={exercise._id} {...exercise} />
+          <ExerciseCard
+            key={exercise._id}
+            {...exercise}
+            setDisplayExerciseCallback={setDisplayExercise}
+            setIdCallback={setId}
+          />
         ))
-      ) : 
+      ) : (
         <Spinner animation="border" />
-      }
+      )}
     </>
   );
 }
