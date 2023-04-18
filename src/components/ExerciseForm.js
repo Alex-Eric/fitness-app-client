@@ -24,6 +24,10 @@ function ExerciseForm(props) {
         })
         .then(() => {
           props.setDisplayCreateExerciseCallback(false)
+          props.setNameCallback("")
+          props.setTypeCallback("")
+          props.setDescriptionCallback("")
+          props.setValidatedCallback(false)
           props.navigate("/exercises");
         })
         .catch((err) => console.log("Error: ", err));
@@ -38,6 +42,7 @@ function ExerciseForm(props) {
         .then((response) => {
             console.log(response)
             props.setUpdateCallback(false)
+            props.setValidatedCallback(false)
             props.navigate(`exercises/${id}`)
         })
         .catch((err) => console.log("Error: ", err));
