@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { Spinner } from "react-bootstrap";
 import MuscleCard from "../components/MuscleCard";
 
 function Muscles() {
@@ -20,15 +21,14 @@ function Muscles() {
   }, []);
   return (
     <>
-        <h1>Muscles</h1>
-    {muscles ?  
+      <h1>Muscles</h1>
+      {muscles ? (
         muscles.map((muscle) => {
-        return (
-          <MuscleCard key={muscle._id} {...muscle}/>
-        )})
-      : "Loading..."
-      }
-      
+          return <MuscleCard key={muscle._id} {...muscle} />;
+        })
+      ) : (
+        <Spinner animation="border" />
+      )}
     </>
   );
 }
