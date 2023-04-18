@@ -1,8 +1,12 @@
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
+import MuscleGroupImage from "./MuscleGroupImage.tsx";
 
 function ExerciseCard(props) {
-  const id = props._id;
+
+  const id = props.exercises.owner;
+  const user = props.users.filter(a=>a._id === id )[0]
+
   return (
     <Link
       onClick={() => {
@@ -22,12 +26,14 @@ function ExerciseCard(props) {
           color: "black",
         }}
       >
-        <Card.Img
+        {/* <Card.Img
           variant="top"
           src="https://static.strengthlevel.com/images/illustrations/incline-hammer-curl-1000x1000.jpg"
-        />
+        /> */}
+        <MuscleGroupImage muscleGroups={[`${props.exercises.muscle}`]} />
         <Card.Body>
-          <Card.Title>{props.name}</Card.Title>
+          <Card.Title>{props.exercises.name}</Card.Title> <br />
+          <Card.Subtitle>Created by {user.name}</Card.Subtitle>
         </Card.Body>
       </Card>
     </Link>

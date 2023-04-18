@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
 import Login from "./Login";
 
-function Exercises() {
+function Exercises(props) {
   const [exercises, setExercises] = useState(null);
   const [id, setId] = useState("");
 
@@ -22,9 +22,16 @@ function Exercises() {
   const [description, setDescription] = useState("");
   const [validated, setValidated] = useState(false);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { isLoggedIn } = useContext(AuthContext);
+  const [users, setUsers] = useState("");
 
+  const getAllUsers = () => {
+    axios
+      .get(`${process.env.REACT_APP_AUTH_URL}/users`)
+      .then((response) => setUsers(response.data))
+      .catch((err) => console.log("ERROR: ", err));
+  };
 
   const getAllExercises = () => {
     axios
@@ -33,19 +40,25 @@ function Exercises() {
           "http://localhost:5005/api/exercises"
       )
       .then((response) => {
+        console.log(response);
         setExercises(response.data);
       })
       .catch((error) => {
         console.log("error: ", error);
       });
   };
+
+  useEffect(() => {
+    getAllUsers();
+  }, []);
+
   useEffect(() => {
     getAllExercises();
   }, [id, displayCreateExercise]);
   return (
     <>
       <Button
-      style={{"margin":"20px"}}
+        style={{ margin: "20px" }}
         variant="danger"
         onClick={() => {
           displayCreateExercise
@@ -59,26 +72,32 @@ function Exercises() {
       {displayCreateExercise && (
         <>
           <br />
-          {isLoggedIn ? <ExerciseForm
-        name={name}
-        setNameCallback={setName}
-        type={type}
-        setTypeCallback={setType}
-        description={description}
-        setDescriptionCallback={setDescription}
-        validated={validated}
-        setValidatedCallback={setValidated}
-        navigate={navigate}
-        buttonName={"Create"}
-        submit={"create"}
-        setDisplayCreateExerciseCallback={setDisplayCreateExercise}
-      />: <Login />}
-          
+          {isLoggedIn ? (
+            <ExerciseForm
+              name={name}
+              setNameCallback={setName}
+              type={type}
+              setTypeCallback={setType}
+              description={description}
+              setDescriptionCallback={setDescription}
+              muscles={props.muscles}
+              setMusclesCallback={props.setMusclesCallback}
+              validated={validated}
+              setValidatedCallback={setValidated}
+              navigate={navigate}
+              buttonName={"Create"}
+              submit={"create"}
+              setDisplayCreateExerciseCallback={setDisplayCreateExercise}
+            />
+          ) : (
+            <Login />
+          )}
+
           <br />
         </>
       )}
       {displayExercise ? (
-        exercises ? (
+        exercises & users ? (
           <div>
             <br />
             <div style={{ display: "flex" }}>
@@ -91,7 +110,8 @@ function Exercises() {
                     return (
                       <ExerciseCard
                         key={exercise._id}
-                        {...exercise}
+                        exercises={exercise}
+                        users={users}
                         setIdCallback={setId}
                         setDisplayExerciseCallback={setDisplayExercise}
                       />
@@ -123,8 +143,8 @@ function Exercises() {
           })
           .map((exercise) => (
             <ExerciseCard
-              key={exercise._id}
-              {...exercise}
+              exercises={exercise}
+              users={users}
               setDisplayExerciseCallback={setDisplayExercise}
               setIdCallback={setId}
             />

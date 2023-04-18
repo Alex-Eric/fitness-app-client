@@ -23,11 +23,11 @@ function ExerciseForm(props) {
           description: props.description,
         })
         .then(() => {
-          props.setDisplayCreateExerciseCallback(false)
-          props.setNameCallback("")
-          props.setTypeCallback("")
-          props.setDescriptionCallback("")
-          props.setValidatedCallback(false)
+          props.setDisplayCreateExerciseCallback(false);
+          props.setNameCallback("");
+          props.setTypeCallback("");
+          props.setDescriptionCallback("");
+          props.setValidatedCallback(false);
           props.navigate("/exercises");
         })
         .catch((err) => console.log("Error: ", err));
@@ -40,10 +40,10 @@ function ExerciseForm(props) {
           description: props.description,
         })
         .then((response) => {
-            console.log(response)
-            props.setUpdateCallback(false)
-            props.setValidatedCallback(false)
-            props.navigate(`exercises/${id}`)
+          console.log(response);
+          props.setUpdateCallback(false);
+          props.setValidatedCallback(false);
+          props.navigate(`exercises/${id}`);
         })
         .catch((err) => console.log("Error: ", err));
     }
@@ -84,7 +84,7 @@ function ExerciseForm(props) {
             onChange={(e) => props.setTypeCallback(e.target.value)}
           >
             <option value={""}>Open this select menu</option>
-            {types ? (
+            {types &&
               types.map((element) => (
                 <option key={element._id} value={element}>
                   {element
@@ -92,15 +92,37 @@ function ExerciseForm(props) {
                     .map((e) => e.charAt().toUpperCase() + e.slice(1))
                     .join(" ")}
                 </option>
-              ))
-            ) : (
-              <Spinner animation="border" />
-            )}
+              ))}
           </Form.Select>
           <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
           <Form.Control.Feedback type="invalid">
             Please choose a type
           </Form.Control.Feedback>
+        </FloatingLabel>
+        <br />
+        <FloatingLabel
+          controlId="floatingInput"
+          label="Muscle"
+          className="mb-3"
+        >
+          <Form.Select
+            required
+            size="2"
+            aria-label="Default select example"
+            name="muscle"
+            value={props.muscle}
+            onChange={(e) => props.setMuscleCallback(e.target.value)}
+          >
+            <option value={""}>Open this select menu</option>
+            {props.muscles.map((element) => (
+              <option key={element._id} value={element.name}>
+                {element.name
+                  .split("_")
+                  .map((e) => e.charAt().toUpperCase() + e.slice(1))
+                  .join(" ")}
+              </option>
+            ))}
+          </Form.Select>
         </FloatingLabel>
         <br />
         <FloatingLabel
