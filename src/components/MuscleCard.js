@@ -1,4 +1,3 @@
-import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 
 function MuscleCard({ name, photo }) {
@@ -10,12 +9,20 @@ function MuscleCard({ name, photo }) {
         padding: "20px",
         margin: "5px",
         display: "inline-block",
-        overflow: "scroll",
+        overflow: "hidden",
       }}
     >
-      <Card.Img variant="top" src="https://static.strengthlevel.com/images/illustrations/incline-hammer-curl-1000x1000.jpg" />
+      <Card.Img
+        variant="top"
+        src={photo}
+      />
       <Card.Body>
-        <Card.Title>{name}</Card.Title>
+        <Card.Title>
+          {name
+            .split("_")
+            .map((e) => e.charAt().toUpperCase() + e.slice(1))
+            .join(" ")}
+        </Card.Title>
       </Card.Body>
     </Card>
   );

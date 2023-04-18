@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Button, Spinner } from "react-bootstrap";
+import { Spinner } from "react-bootstrap";
 import WorkoutAccordion from "../components/WorkoutAccordion";
 import Accordion from "react-bootstrap/Accordion";
 import { Link } from "react-router-dom";

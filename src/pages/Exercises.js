@@ -23,7 +23,7 @@ function Exercises() {
   const [validated, setValidated] = useState(false);
 
   const navigate = useNavigate()
-  const { isLoggedIn, isLoading } = useContext(AuthContext);
+  const { isLoggedIn } = useContext(AuthContext);
 
 
   const getAllExercises = () => {

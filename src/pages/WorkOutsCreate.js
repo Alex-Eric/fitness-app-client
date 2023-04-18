@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Button, Spinner, Form, FloatingLabel } from "react-bootstrap";
+import { Button, Form, FloatingLabel } from "react-bootstrap";
 
 function WorkOutsCreate() {
     const [name, setName] = useState("")
@@ -11,6 +11,8 @@ function WorkOutsCreate() {
     const navigate = useNavigate();
   function handleSubmit(event) {
     event.preventDefault();
+
+    setValidated(true)
     const workOutData = {
         name,
         series,

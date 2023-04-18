@@ -32,7 +32,7 @@ function Login() {
       });
   };
   return (
-    <div style={{"margin":"10% 40%"}}>
+    <div style={{"margin":"20px 40%"}}>
     <Form onSubmit={handleSubmit}>
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Email address</Form.Label>
