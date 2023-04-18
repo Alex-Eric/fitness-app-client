@@ -23,7 +23,7 @@ function ExerciseForm(props) {
           description: props.description,
         })
         .then(() => {
-          console.log("IN");
+          props.setDisplayCreateExerciseCallback(false)
           props.navigate("/exercises");
         })
         .catch((err) => console.log("Error: ", err));

@@ -16,6 +16,7 @@ function ExerciseDetail(props) {
   const [updateName, setUpdateName] = useState("Update");
   const [deleteSure, setDeleteSure] = useState(false);
   const navigate = useNavigate();
+
   const getExercise = () => {
     axios
       .get(
@@ -32,22 +33,22 @@ function ExerciseDetail(props) {
         console.log("error: ", error);
       });
   };
-  useEffect(() => {
-    getExercise();
-  }, [update, id]);
-
+  
   const handleDelete = () => {
     axios
-      .delete(`${process.env.REACT_APP_API_URL}/exercises/${id}`)
-      .then((response) => {
-        navigate("/exercises");
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log("error: ", error);
-      });
-    setDeleteSure(false);
+    .delete(`${process.env.REACT_APP_API_URL}/exercises/${id}`)
+    .then(() => {
+      navigate("/exercises");
+      props.setIdCallback("")
+    })
+    .catch((error) => {
+      console.log("error: ", error);
+    });
   };
+
+  useEffect(() => {
+    getExercise();
+  }, [id]);
 
   return (
     <>
@@ -89,7 +90,17 @@ function ExerciseDetail(props) {
           <Button
             variant="danger"
             style={{ width: "20%", "margin-right": "20px" }}
-            onClick={() => (update ? <>{setUpdate(false)} {setUpdateName("Back")}</> : <>{setUpdate(true)} {setUpdateName("Update")}</>)}
+            onClick={() =>
+              update ? (
+                <>
+                  {setUpdate(false)} {setUpdateName("Back")}
+                </>
+              ) : (
+                <>
+                  {setUpdate(true)} {setUpdateName("Update")}
+                </>
+              )
+            }
           >
             {updateName}
           </Button>
@@ -97,7 +108,10 @@ function ExerciseDetail(props) {
             <Button
               variant="danger"
               style={{ width: "20%" }}
-              onClick={handleDelete}
+              onClick={() => {
+                props.setDisplayExerciseCallback(false);
+                handleDelete();
+              }}
             >
               Are you sure?
             </Button>

@@ -32,7 +32,7 @@ function Login() {
       });
   };
   return (
-    <>
+    <div style={{"margin":"10% 40%"}}>
     <Form onSubmit={handleSubmit}>
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Email address</Form.Label>
@@ -61,7 +61,7 @@ function Login() {
       </Button>
     </Form>
     { errorMessage && <p className="error-message">{errorMessage}</p> }
-    </>
+    </div>
   );
 }
 export default Login;

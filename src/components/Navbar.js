@@ -24,20 +24,12 @@ function NavbarF() {
               <LinkContainer to="/muscles">
                 <Nav.Link>Muscles</Nav.Link>
               </LinkContainer>
-              <NavDropdown title="Exercises" id="basic-nav-dropdown">
-                <LinkContainer to="/exercises">
-                  <NavDropdown.Item>List</NavDropdown.Item>
-                </LinkContainer>
-                <LinkContainer to="/exercises/create">
-                  <NavDropdown.Item>Create</NavDropdown.Item>
-                </LinkContainer>
-                <NavDropdown.Divider />
-                <LinkContainer to="/exercises/my">
-                  <NavDropdown.Item>My Exercises</NavDropdown.Item>
-                </LinkContainer>
-              </NavDropdown>
+              <LinkContainer to="/exercises">
+                <Nav.Link>Exercises</Nav.Link>
+              </LinkContainer>
 
-              <LinkContainer to="/Workouts">
+
+              <LinkContainer to="/workouts">
                 <Nav.Link>Workouts</Nav.Link>
               </LinkContainer>
             </div>
