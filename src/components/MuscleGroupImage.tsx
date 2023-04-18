@@ -1,15 +1,15 @@
-import {useEffect, useState} from "react";
+import React,{useEffect, useState} from "react";
 import axios from "axios";
 
 interface MuscleGroupImageProps {
     muscleGroups: Array<string>
 }
 
-export default function MuscleGroupImage(props: MuscleGroupImageProps) {
+function MuscleGroupImage(props: MuscleGroupImageProps) {
     const [image, setImage] = useState("");
 
     const fetchImage = async() => {
-        axios.get(`https://muscle-group-image-generator.p.rapidapi.com/getImage?muscleGroups=${props.muscleGroups.join(",")}`, {
+        axios.get(`https://muscle-group-image-generator.p.rapidapi.com/getImage?muscleGroups=${props.muscleGroups.join(",")}&color=255,0,0`, {
             headers: {
                 'X-RapidAPI-Key': '87e970ccc6msh95271ac9916449bp1cfd96jsna167b46e9ef0',
                 'X-RapidAPI-Host': 'muscle-group-image-generator.p.rapidapi.com',
@@ -26,5 +26,7 @@ export default function MuscleGroupImage(props: MuscleGroupImageProps) {
         fetchImage()
     }, [])
 
-    return <img src={image} alt={`Image of ${props.muscleGroups.join(",")}`} />
+    return <img src={image} alt={`Image of ${props.muscleGroups.join(",")}`} style={{"width":"16rem"}} />
 }
+
+export default MuscleGroupImage

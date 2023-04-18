@@ -1,4 +1,6 @@
+import { useEffect, useState } from "react";
 import Card from "react-bootstrap/Card";
+import MuscleGroupImage from "./MuscleGroupImage.tsx";
 
 function MuscleCard({ name, photo }) {
   return (
@@ -12,10 +14,7 @@ function MuscleCard({ name, photo }) {
         overflow: "hidden",
       }}
     >
-      <Card.Img
-        variant="top"
-        src={photo}
-      />
+      <MuscleGroupImage muscleGroups={[`${photo}`]} />
       <Card.Body>
         <Card.Title>
           {name
