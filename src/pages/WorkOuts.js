@@ -1,13 +1,19 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { Spinner } from "react-bootstrap";
+import { useEffect, useState, useContext } from "react";
+import { Button, Spinner } from "react-bootstrap";
 import WorkoutAccordion from "../components/WorkoutAccordion";
 import Accordion from "react-bootstrap/Accordion";
-import { Link } from "react-router-dom";
+import WorkoutCreate from "../components/WorkoutCreate";
+import Login from "./Login";
+import { AuthContext } from "../context/auth.context";
+
 function Workouts() {
+  const { isLoggedIn } = useContext(AuthContext);
+  const [createCheck, setCreateCheck] = useState(false);
   const [workouts, setWorkouts] = useState(null);
   const [deleteCheck, setDeleteCheck] = useState(false);
-  const [editCheck, setEditCheck] = useState(false)
+  const [editCheck, setEditCheck] = useState(false);
+  const [createBtn, setCreateBtn] = useState("Create");
   function getAllWorkouts() {
     axios.get(`${process.env.REACT_APP_API_URL}/workouts`).then((response) => {
       setWorkouts(response.data);
@@ -16,12 +22,42 @@ function Workouts() {
   useEffect(() => {
     getAllWorkouts();
     setDeleteCheck(false);
-    setEditCheck(false)
-  }, [deleteCheck, editCheck]);
+    setEditCheck(false);
+  }, [deleteCheck, editCheck, createCheck]);
   return (
     <div style={{ margin: " 0 20%" }}>
       <h1>Workouts</h1>
-      <Link to="/workouts/create">Create</Link>
+      <Button
+          onClick={() =>
+            createCheck
+              ? (setCreateCheck(false), setCreateBtn("Create"))
+              : (setCreateCheck(true), setCreateBtn("Back"))
+          }
+        >
+          {createBtn}
+        </Button>
+      <br /> 
+
+       
+    
+        {createCheck && (
+        <>
+          <br />
+          {isLoggedIn ? (
+            <WorkoutCreate
+                setCreateCheckcallback={setCreateCheck}
+                setCreateBtncallback={setCreateBtn}
+              />
+          ) : (
+            <Login />
+          )}
+
+          <br />
+        </>
+      )}
+
+
+      <br />
       <Accordion defaultActiveKey="0">
         {workouts ? (
           workouts.map((workout) => {

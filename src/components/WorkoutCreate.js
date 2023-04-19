@@ -3,12 +3,13 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Button, Form, FloatingLabel } from "react-bootstrap";
 
-function WorkOutsCreate() {
+function WorkOutsCreate(props) {
     const [name, setName] = useState("")
     const [series, setSeries] = useState("")
     const [description,setDescription] = useState("")
     const [validated, setValidated] = useState(false);
-    const navigate = useNavigate();
+
+
   function handleSubmit(event) {
     event.preventDefault();
 
@@ -21,8 +22,11 @@ function WorkOutsCreate() {
 
     axios.post(`${process.env.REACT_APP_API_URL}/workouts/create`, workOutData)
     .then((response)=>{
-        navigate("/workouts")
-        console.log(response)
+        props.setCreateCheckcallback(false)
+        props.setCreateBtncallback("Create")
+        setName("")
+        setSeries("")
+        setDescription("")
     })
     .catch((e)=>{
         console.log("error...",e)

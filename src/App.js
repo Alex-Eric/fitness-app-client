@@ -6,10 +6,8 @@ import Muscles from "./pages/Muscles";
 import Workouts from "./pages/WorkOuts";
 import Exercises from "./pages/Exercises";
 import ExerciseDetail from "./pages/ExerciseDetail";
-import WorkOutsCreate from "./pages/WorkOutsCreate";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import IsPrivate from "./components/IsPrivate";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -44,14 +42,6 @@ function App() {
         <Route path="/exercises" element={<Exercises muscles={muscles} setMusclesCallback={setMuscles}/>} />
         <Route path="/exercises/:id" element={<ExerciseDetail />} />
         <Route path="/workouts" element={<Workouts />} />
-        <Route
-          path="/workouts/create"
-          element={
-            <IsPrivate>
-              <WorkOutsCreate />
-            </IsPrivate>
-          }
-        />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Routes>
