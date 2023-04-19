@@ -20,3 +20,187 @@ code {
   justify-content: space-between;
   align-items: center;
 }
+
+/* Estilos generales */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
+}
+
+/* Encabezado */
+
+header {
+  background-color: #222;
+  color: #fff;
+  padding: 10px;
+}
+
+h1 {
+  font-size: 2em;
+  margin: 0;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav li {
+  margin-right: 10px;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+}
+
+/* Banner principal */
+
+.banner {
+  background-color: #444;
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+}
+
+.banner h2 {
+  font-size: 3em;
+  margin-bottom: 20px;
+}
+
+
+/* Sección de introducción */
+
+.introduction {
+  padding: 50px 0;
+  text-align: center;
+}
+
+.introduction h2 {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.introduction p {
+  font-size: 1.2em;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Sección de características */
+
+.features {
+  background-color: #eee;
+  padding: 50px 0;
+  text-align: center;
+}
+
+.features h2 {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.features ul {
+  list-style: none;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.features li {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+/* Sección de imágenes */
+
+.images {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 50px 0;
+}
+
+.images img {
+  width: 30%;
+  margin-bottom: 20px;
+}
+
+/* Llamado a la acción */
+
+.cta {
+  background-color: #444;
+  color: #fff;
+  text-align: center;
+  padding: 50px 0;
+}
+
+.cta h2 {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+/* Pie de página */
+
+footer {
+  background-color: #222;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+  }
+  
+  footer p {
+  font-size: 1.2em;
+  margin: 0;
+  }
+  
+  /* Media queries */
+  
+  @media screen and (max-width: 768px) {
+  .banner h2 {
+  font-size: 2em;
+  }
+  
+  .banner button {
+  font-size: 1.2em;
+  }
+  
+  .introduction h2 {
+  font-size: 1.5em;
+  }
+  
+  .introduction p {
+  font-size: 1em;
+  }
+  
+  .features h2 {
+  font-size: 1.5em;
+  }
+  
+  .features li {
+  font-size: 1em;
+  }
+  
+  .images img {
+  width: 45%;
+  }
+  
+  .cta h2 {
+  font-size: 1.5em;
+  }
+  
+  .cta button {
+  font-size: 1.2em;
+  }
+  }

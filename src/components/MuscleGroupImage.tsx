@@ -44,7 +44,7 @@ function MuscleGroupImage(props: MuscleGroupImageProps) {
           style={{ width: "16rem" }}
         />
       ) : (
-        <Card.Img variant="top" src="https://dev-to-uploads.s3.amazonaws.com/i/mrvsmk2pl3l8fwocbfhy.gif" />
+        <Card.Img variant="top" src="https://cdn.shopify.com/s/files/1/0252/5596/8843/t/34/assets/loading.gif?v=157493769327766696621671056471" />
       )}
     </>
   );

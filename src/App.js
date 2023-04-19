@@ -21,7 +21,6 @@ function App() {
       )
       .then((response) => {
         setMuscles(response.data);
-        console.log("MUSCLES :",response.data)
       });
   };
   useEffect(() => {

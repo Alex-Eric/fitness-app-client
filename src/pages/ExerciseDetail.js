@@ -20,10 +20,12 @@ function ExerciseDetail(props) {
   const getExercise = () => {
     axios
       .get(
-        `${process.env.REACT_APP_API_URL}/exercises/${id}` ||
-          "http://localhost:5005/api/exercises"
+        // `${process.env.REACT_APP_API_URL}/exercises/${id}` ||
+          `http://localhost:5005/api/exercises/${id}`
       )
       .then((response) => {
+        console.log("id: ",id)
+        console.log("response: ",response.data)
         setExercise(response.data);
         setName(response.data.name);
         setType(response.data.type);
@@ -81,6 +83,8 @@ function ExerciseDetail(props) {
                 setDescriptionCallback={setDescription}
                 validated={validated}
                 setValidatedCallback={setValidated}
+                muscles={props.muscles}
+                setMusclesCallback={props.setMusclesCallback}
                 setUpdateCallback={setUpdate}
                 buttonName={"Send"}
                 submit={"update"}
