@@ -25,8 +25,8 @@ function HomePage() {
           exercise and workouts!
         </p>
       </section>
-      <Carousel variant="dark">
-        <Carousel.Item style={{ height: "500px" }}>
+      <Carousel variant="dark" className="carousel">
+        <Carousel.Item className="carousel-item">
           <Link to="/muscles">
             <img
               className="d-block w-100"
@@ -35,14 +35,14 @@ function HomePage() {
             />
           </Link>
           <Carousel.Caption style={{ color: "white" }}>
-            <h5>Muscles!</h5>
+            <h1>Muscles!</h1>
             <p>
               You can see all the muscles with images that you can exercise on
               our website!
             </p>
           </Carousel.Caption>
         </Carousel.Item>
-        <Carousel.Item style={{ height: "500px" }}>
+        <Carousel.Item className="carousel-item">
           <Link to="/exercises">
             <img
               className="d-block w-100"
@@ -51,24 +51,23 @@ function HomePage() {
             />
           </Link>
           <Carousel.Caption style={{ color: "white" }}>
-            <h5>Exercises!</h5>
+            <h1>Exercises!</h1>
             <p>
               Here you will find a series of basic exercises in addition to the
               exercises created by the community
             </p>
           </Carousel.Caption>
         </Carousel.Item>
-        <Carousel.Item style={{ height: "500px" }}>
+        <Carousel.Item className="carousel-item">
           <Link to="/workouts">
             <img
               className="d-block w-100"
               src="https://www.chelseapiersct.com/cpct2015/cache/file/3CB638CD-ECC2-55B3-79E56E1285465BBC_fitness-banner.jpg"
               alt="Third slide"
-              style={{ height: "500px", width: "auto" }}
             />
           </Link>
           <Carousel.Caption style={{ color: "white" }}>
-            <h5>Workouts!</h5>
+            <h1>Workouts!</h1>
             <p>
               Praesent commodo cursus magna, vel scelerisque nisl consectetur.
             </p>

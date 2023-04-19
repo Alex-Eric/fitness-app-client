@@ -15,40 +15,40 @@ function NavbarF() {
         <Navbar.Brand>Fitness App</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto text-right" style={{"flex-direction":"row"}}>
-            <div style={{"display":"flex"}}>
-              <LinkContainer to="/">
-                <Nav.Link>Home</Nav.Link>
-              </LinkContainer>
-              <LinkContainer to="/muscles">
-                <Nav.Link>Muscles</Nav.Link>
-              </LinkContainer>
-              <LinkContainer to="/exercises">
-                <Nav.Link>Exercises</Nav.Link>
-              </LinkContainer>
-
-
-              <LinkContainer to="/workouts">
-                <Nav.Link>Workouts</Nav.Link>
-              </LinkContainer>
-            </div>
-            <div>
-              {isLoggedIn ? (
-                <div style={{"display":"flex"}}>
-                  <Navbar.Brand>{user && user.name.toUpperCase()}</Navbar.Brand>
-                  <Button onClick={logOutUser}>Log out</Button>
+          <Nav className="me-auto">
+            <LinkContainer to="/">
+              <Nav.Link>Home</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/muscles">
+              <Nav.Link>Muscles</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/exercises">
+              <Nav.Link>Exercises</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/workouts">
+              <Nav.Link>Workouts</Nav.Link>
+            </LinkContainer>
+          </Nav>
+          <Nav>
+            {isLoggedIn ? (
+              <>
+              <div className="user">
+                <Navbar.Brand>{user && user.name.charAt(0).toUpperCase() + user.name.slice(1).toLowerCase()}</Navbar.Brand>
                 </div>
-              ) : (
-                <div style={{"display":"flex"}}>
-                  <LinkContainer to="/login">
-                    <Nav.Link>Login</Nav.Link>
-                  </LinkContainer>
-                  <LinkContainer to="/register">
-                    <Nav.Link>Register</Nav.Link>
-                  </LinkContainer>
-                </div>
-              )}
-            </div>
+                <div style={{"margin":"10px"}}>
+                <Button onClick={logOutUser}>Log out</Button>
+              </div>
+              </>
+            ) : (
+              <div className="login-register">
+                <LinkContainer to="/login">
+                  <Nav.Link>Login</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to="/register">
+                  <Nav.Link>Register</Nav.Link>
+                </LinkContainer>
+              </div>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>
