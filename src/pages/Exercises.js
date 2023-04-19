@@ -40,7 +40,6 @@ function Exercises(props) {
           "http://localhost:5005/api/exercises"
       )
       .then((response) => {
-        console.log(response);
         setExercises(response.data);
       })
       .catch((error) => {
@@ -72,7 +71,7 @@ function Exercises(props) {
       {displayCreateExercise && (
         <>
           <br />
-          {isLoggedIn ? (
+          {isLoggedIn ? ( props.muscles && 
             <ExerciseForm
               name={name}
               setNameCallback={setName}
@@ -81,7 +80,7 @@ function Exercises(props) {
               description={description}
               setDescriptionCallback={setDescription}
               muscles={props.muscles}
-              setMusclesCallback={props.setMusclesCallback}
+              setMusclesCallback={props.setMuscleCallback}
               validated={validated}
               setValidatedCallback={setValidated}
               navigate={navigate}
@@ -97,7 +96,7 @@ function Exercises(props) {
         </>
       )}
       {displayExercise ? (
-        exercises & users ? (
+        exercises && users ? (
           <div>
             <br />
             <div style={{ display: "flex" }}>
@@ -114,6 +113,7 @@ function Exercises(props) {
                         users={users}
                         setIdCallback={setId}
                         setDisplayExerciseCallback={setDisplayExercise}
+                        muscles={props.muscles}
                       />
                     );
                   })}
@@ -129,6 +129,8 @@ function Exercises(props) {
                   id={id}
                   setDisplayExerciseCallback={setDisplayExercise}
                   setIdCallback={setId}
+                  muscles={props.muscles}
+              setMusclesCallback={props.setMusclesCallback}
                 />
               </div>
             </div>
@@ -143,10 +145,12 @@ function Exercises(props) {
           })
           .map((exercise) => (
             <ExerciseCard
+              key={exercise._id}
               exercises={exercise}
               users={users}
               setDisplayExerciseCallback={setDisplayExercise}
               setIdCallback={setId}
+              muscles={props.muscles}
             />
           ))
       ) : (

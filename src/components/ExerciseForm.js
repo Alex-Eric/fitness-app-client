@@ -1,7 +1,14 @@
-import { Button, FloatingLabel, Spinner, Form } from "react-bootstrap";
+import { Button, FloatingLabel, Form } from "react-bootstrap";
 import axios from "axios";
+import { useContext, useState } from "react";
+import { AuthContext } from "../context/auth.context";
 
 function ExerciseForm(props) {
+  const [muscle,setMuscle] = useState(null)
+
+  const {user} = useContext(AuthContext)
+
+  console.log(user)
   const types = [
     "strength",
     "olympic_weightlifting",
@@ -13,24 +20,27 @@ function ExerciseForm(props) {
   ];
   const handleSubmit = (event) => {
     event.preventDefault();
-
     props.setValidatedCallback(true);
     if (props.submit === "create") {
       axios
-        .post(`${process.env.REACT_APP_API_URL}/exercises/create`, {
-          name: props.name,
-          type: props.type,
-          description: props.description,
-        })
-        .then(() => {
-          props.setDisplayCreateExerciseCallback(false);
-          props.setNameCallback("");
-          props.setTypeCallback("");
-          props.setDescriptionCallback("");
-          props.setValidatedCallback(false);
-          props.navigate("/exercises");
-        })
-        .catch((err) => console.log("Error: ", err));
+      .post(`${process.env.REACT_APP_API_URL}/exercises/create`, {
+        name: props.name,
+        type: props.type,
+        description: props.description,
+        muscle,
+        owner:user._id
+      })
+      .then((response) => {
+        console.log("RESPONSE: ",response)
+        props.setDisplayCreateExerciseCallback(false);
+        props.setNameCallback("");
+        props.setTypeCallback("");
+        props.setDescriptionCallback("");
+        props.setValidatedCallback(false);
+        props.navigate("/exercises");
+      })
+      .catch((err) => console.log("Error: ", err));
+      console.log("IN")
     } else if (props.submit === "update") {
       const id = props.id;
       axios
@@ -39,11 +49,9 @@ function ExerciseForm(props) {
           type: props.type,
           description: props.description,
         })
-        .then((response) => {
-          console.log(response);
+        .then(() => {
           props.setUpdateCallback(false);
           props.setValidatedCallback(false);
-          props.navigate(`exercises/${id}`);
         })
         .catch((err) => console.log("Error: ", err));
     }
@@ -110,11 +118,11 @@ function ExerciseForm(props) {
             size="2"
             aria-label="Default select example"
             name="muscle"
-            value={props.muscle}
-            onChange={(e) => props.setMuscleCallback(e.target.value)}
+            value={muscle}
+            onChange={(e) => setMuscle(e.target.value)}
           >
             <option value={""}>Open this select menu</option>
-            {props.muscles.map((element) => (
+            {props.muscles && props.muscles.map((element) => (
               <option key={element._id} value={element.name}>
                 {element.name
                   .split("_")
