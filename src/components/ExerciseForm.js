@@ -175,7 +175,6 @@ function ExerciseForm(props) {
         </FloatingLabel>
         <br />
         <Button
-          variant="danger"
           type="submit"
           style={{ width: "30%", "margin-bottom": "30px" }}
         >

@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Footer from "./components/Footer";
 
 function App() {
   const [muscles, setMuscles] = useState(null);
@@ -44,6 +45,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Routes>
+      <Footer />
     </div>
   );
 }

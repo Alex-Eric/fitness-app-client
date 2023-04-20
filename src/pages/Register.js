@@ -7,7 +7,9 @@ function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState(undefined);
   const navigate = useNavigate()
+  
   const handleSubmit = (event) => {
     event.preventDefault();
     axios
@@ -19,24 +21,23 @@ function Register() {
       .then((response) => {
         navigate("/login")
       })
-      .catch((e) => {
-        console.log("error...", e);
+      .catch((error) => {
+        const errorDescription = error.response.data.message;
+      	setErrorMessage(errorDescription);
       });
   };
   return (
-    <div style={{ margin: "10% 40%" }}>
+    <div className="login-register-page">
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="formBasicUser">
           <Form.Label>User name</Form.Label>
           <Form.Control
             type="text"
             placeholder="Enter user name"
+            name="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-          <Form.Text className="text-muted">
-            We'll never share your email with anyone else.
-          </Form.Text>
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -44,6 +45,7 @@ function Register() {
           <Form.Control
             type="email"
             placeholder="Enter email"
+            name="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -57,13 +59,15 @@ function Register() {
           <Form.Control
             type="password"
             placeholder="Password"
+            name="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Group>
         <Button variant="primary" type="submit">
-          Submit
+          Register
         </Button>
+        { errorMessage && <p className="error-message">{errorMessage}</p> }
       </Form>
     </div>
   );

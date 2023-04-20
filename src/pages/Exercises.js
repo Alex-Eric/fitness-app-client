@@ -9,8 +9,11 @@ import { AuthContext } from "../context/auth.context";
 import Login from "./Login";
 
 function Exercises(props) {
+  //Initialize useNavigate
+  const navigate = useNavigate();
+
+  //Save exercises
   const [exercises, setExercises] = useState(null);
-  const [id, setId] = useState("");
 
   //Display components variables
   const [displayExercise, setDisplayExercise] = useState(false);
@@ -22,11 +25,14 @@ function Exercises(props) {
   const [reps, setReps] = useState("");
   const [description, setDescription] = useState("");
   const [validated, setValidated] = useState(false);
+  const [id, setId] = useState("");
 
-  const navigate = useNavigate();
   const { isLoggedIn } = useContext(AuthContext);
+
+  //Save users
   const [users, setUsers] = useState("");
 
+  //Get all users
   const getAllUsers = () => {
     axios
       .get(`${process.env.REACT_APP_AUTH_URL}/users`)
@@ -34,6 +40,7 @@ function Exercises(props) {
       .catch((err) => console.log("ERROR: ", err));
   };
 
+  //Get all the exercises
   const getAllExercises = () => {
     axios
       .get(
@@ -48,26 +55,32 @@ function Exercises(props) {
       });
   };
 
+  //Get the exercises only one time
   useEffect(() => {
     getAllUsers();
   }, []);
 
+  //Get the users only one time
   useEffect(() => {
     getAllExercises();
   }, [id, displayCreateExercise]);
+
   return (
     <>
-      <Button
+      {/* The button to open the create exercise form*/}
+      {!displayExercise && <Button
         style={{ margin: "20px" }}
-        variant="danger"
         onClick={() => {
           displayCreateExercise
             ? setDisplayCreateExercise(false)
             : setDisplayCreateExercise(true);
         }}
       >
-        {displayCreateExercise ? "Back" : "Create an exercise!"}
-      </Button>
+        {/* The button name change if is the form is visible or not */}
+        {displayCreateExercise ? "Cancel" : "Create an exercise!"}
+      </Button>}
+      
+
       <br />
       {displayCreateExercise && (
         <>
@@ -92,18 +105,23 @@ function Exercises(props) {
               setDisplayCreateExerciseCallback={setDisplayCreateExercise}
             />
           ) : (
+            <>
+            {/* IF the user it's not logged, display de login page */}
             <Login />
+            </>
           )}
 
           <br />
+
         </>
       )}
+      {/* Check if the exercise shows full screen, or half screen with details */}
       {displayExercise ? (
-        exercises && users ? (
+        
+        (exercises && users) ? (
           <div>
-            <br />
             <div style={{ display: "flex" }}>
-              <div style={{ width: "60%" }}>
+              <div className="display-exercise-half-screen">
                 {exercises
                   .sort((a, b) => {
                     return new Date(b.createdAt) - new Date(a.createdAt);
@@ -121,19 +139,13 @@ function Exercises(props) {
                     );
                   })}
               </div>
-              <div style={{ width: "40%", position: "fixed", right: "0px" }}>
-                <Button
-                  variant="danger"
-                  onClick={() => setDisplayExercise(false)}
-                >
-                  Back
-                </Button>
+              <div className="display-exercise-details">
                 <ExerciseDetail
                   id={id}
                   setDisplayExerciseCallback={setDisplayExercise}
                   setIdCallback={setId}
                   muscles={props.muscles}
-              setMusclesCallback={props.setMusclesCallback}
+                  setMusclesCallback={props.setMusclesCallback}
                 />
               </div>
             </div>
