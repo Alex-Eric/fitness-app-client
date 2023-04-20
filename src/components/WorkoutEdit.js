@@ -11,7 +11,7 @@ function WorkoutEdit(props) {
   const [description, setDescription] = useState(props.workout.description);
   const [exercises, setExercises] = useState(props.workout.exercises);
   const navigate = useNavigate();
-  const [exercisesSelect, setExercisesSelect] = useState(null);
+  
 
   function handleData(event) {
     event.preventDefault();
@@ -32,22 +32,7 @@ function WorkoutEdit(props) {
         console.log("error...", e);
       });
   }
-  const getAllExercisesSelect = () => {
-    axios
-      .get(
-        `${process.env.REACT_APP_API_URL}/exercises` ||
-          "http://localhost:5005/api/exercises"
-      )
-      .then((response) => {
-        setExercisesSelect(response.data);
-      })
-      .catch((error) => {
-        console.log("error: ", error);
-      });
-  };
-  useEffect(() => {
-    getAllExercisesSelect();
-  }, []);
+  
 
   return (
     <>
@@ -112,31 +97,19 @@ function WorkoutEdit(props) {
 
         <br />
 
-        <FloatingLabel
-          controlId="floatingInput"
-          label="Select Exercises"
-          className="mb-3"
-        >
-          <Form.Select aria-label="Default select example">
-            <option value="">Open this select menu</option>
-            
-            {exercisesSelect &&
-          exercisesSelect.map((exercise) => {
-            return(
-            <option>{exercise.name}</option>
-            )
+        {props.exercisesSelect &&
+          props.exercisesSelect.map((exercise) => {
+            return (
+              <div key={exercise._id} className="mb-3">
+                <Form.Check
+                  type={"checkbox"}
+                  id={exercise._id}
+                  label={exercise.name}
+                />
+              </div>
+            );
           })}
 
-            
-            
-          </Form.Select>
-
-          <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-          <Form.Control.Feedback type="invalid">
-            Please provide instructions
-          </Form.Control.Feedback>
-        </FloatingLabel>
-        
         <br />
         <Button type="submit" style={{ width: "30%" }}>
           Update

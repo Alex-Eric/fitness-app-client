@@ -14,6 +14,25 @@ function Workouts() {
   const [deleteCheck, setDeleteCheck] = useState(false);
   const [editCheck, setEditCheck] = useState(false);
   const [createBtn, setCreateBtn] = useState("Create");
+  const [exercisesSelect, setExercisesSelect] = useState(null);
+
+  const getAllExercisesSelect = () => {
+    axios
+      .get(
+        `${process.env.REACT_APP_API_URL}/exercises` ||
+          "http://localhost:5005/api/exercises"
+      )
+      .then((response) => {
+        setExercisesSelect(response.data);
+      })
+      .catch((error) => {
+        console.log("error: ", error);
+      });
+  };
+  useEffect(() => {
+    getAllExercisesSelect();
+  }, []);
+
   function getAllWorkouts() {
     axios.get(`${process.env.REACT_APP_API_URL}/workouts`).then((response) => {
       setWorkouts(response.data);
@@ -47,6 +66,8 @@ function Workouts() {
             <WorkoutCreate
                 setCreateCheckcallback={setCreateCheck}
                 setCreateBtncallback={setCreateBtn}
+                setExercisesSelectcallback={setExercisesSelect}
+                exercisesSelect={exercisesSelect}
               />
           ) : (
             <Login />
@@ -66,6 +87,8 @@ function Workouts() {
                 workout={workout}
                 setDeleteCheckcallback={setDeleteCheck}
                 setEditCheckcallback={setEditCheck}
+                setExercisesSelectcallback={setExercisesSelect}
+                exercisesSelect={exercisesSelect}
               />
             );
           })

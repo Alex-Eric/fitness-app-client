@@ -34,7 +34,8 @@ function WorkoutAccordion(props) {
             <br />
           </>
         )}
-        {update && <WorkoutEdit workout={props.workout} setEditCheckcallback={props.setEditCheckcallback} />}
+        {update && <WorkoutEdit workout={props.workout} setEditCheckcallback={props.setEditCheckcallback} setExercisesSelectcallback={props.setExercisesSelectcallback}
+                exercisesSelect={props.exercisesSelect}/>}
         <Button
           onClick={() =>
             update

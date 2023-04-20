@@ -86,6 +86,21 @@ function WorkOutsCreate(props) {
           <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
           <Form.Control.Feedback type="invalid">Please provide instructions</Form.Control.Feedback>
         </FloatingLabel>
+
+        <br />
+        {props.exercisesSelect &&
+          props.exercisesSelect.map((exercise) => {
+            return(
+              <div key={exercise._id} className="mb-3">
+          <Form.Check 
+            type={"checkbox"}
+            id={exercise._id}
+            label={exercise.name}
+          />
+          </div>
+          );
+          })}
+
         <br />
         <Button
           variant="danger"
