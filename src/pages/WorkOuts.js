@@ -49,8 +49,8 @@ function Workouts() {
       <Button
           onClick={() =>
             createCheck
-              ? (setCreateCheck(false), setCreateBtn("Create"))
-              : (setCreateCheck(true), setCreateBtn("Back"))
+              ? (setCreateCheck(false), setCreateBtn("Create a Workout"))
+              : (setCreateCheck(true), setCreateBtn("Cancel"))
           }
         >
           {createBtn}

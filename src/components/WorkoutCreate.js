@@ -8,7 +8,21 @@ function WorkOutsCreate(props) {
     const [series, setSeries] = useState("")
     const [description,setDescription] = useState("")
     const [validated, setValidated] = useState(false);
+    const [exercises, setExercises] = useState([]);
 
+
+    function handleCheckboxChange(event) {
+        const value = event.target.value;
+        const checked = event.target.checked;
+    
+        // Si el checkbox ha sido seleccionado, lo agregamos al estado
+        if (checked) {
+            setExercises([...exercises, value]);
+        } else {
+          // Si ha sido deseleccionado, lo eliminamos del estado
+          setExercises(exercises.filter(item => item !== value));
+        }
+    }
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -17,7 +31,8 @@ function WorkOutsCreate(props) {
     const workOutData = {
         name,
         series,
-        description
+        description,
+        exercises
     }
 
     axios.post(`${process.env.REACT_APP_API_URL}/workouts/create`, workOutData)
@@ -92,10 +107,12 @@ function WorkOutsCreate(props) {
           props.exercisesSelect.map((exercise) => {
             return(
               <div key={exercise._id} className="mb-3">
-          <Form.Check 
+          <Form.Check
+            value={exercise._id}
             type={"checkbox"}
-            id={exercise._id}
             label={exercise.name}
+            checked={exercises.includes(exercise._id)}
+            onChange={handleCheckboxChange}
           />
           </div>
           );
@@ -103,7 +120,6 @@ function WorkOutsCreate(props) {
 
         <br />
         <Button
-          variant="danger"
           type="submit"
           style={{ width: "30%" }}
         >
