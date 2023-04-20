@@ -22,7 +22,6 @@ function Exercises(props) {
   //Form states varaibles
   const [name, setName] = useState("");
   const [type, setType] = useState("");
-  const [reps, setReps] = useState("");
   const [description, setDescription] = useState("");
   const [validated, setValidated] = useState(false);
   const [id, setId] = useState("");
