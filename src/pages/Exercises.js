@@ -66,7 +66,6 @@ function Exercises(props) {
 
   return (
     <>
-      {/* The button to open the create exercise form*/}
       {!displayExercise && <Button
         style={{ margin: "20px" }}
         onClick={() => {
@@ -75,7 +74,6 @@ function Exercises(props) {
             : setDisplayCreateExercise(true);
         }}
       >
-        {/* The button name change if is the form is visible or not */}
         {displayCreateExercise ? "Cancel" : "Create an exercise!"}
       </Button>}
       
@@ -105,20 +103,16 @@ function Exercises(props) {
               />
               )
           ) : (
-            <>
-            {/* IF the user it's not logged, display de login page */}
             <Login />
-            </>
           )}
 
           <br />
 
         </>
       )}
-      {/* Check if the exercise shows full screen, or half screen with details */}
       {displayExercise ? (
         
-        (exercises && users) ? (
+        exercises && users ? (
           <div>
             <div style={{ display: "flex" }}>
               <div className="display-exercise-half-screen">

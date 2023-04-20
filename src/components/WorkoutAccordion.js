@@ -4,6 +4,7 @@ import { Button } from "react-bootstrap";
 import { useContext, useState } from "react";
 import WorkoutEdit from "./WorkoutEdit";
 import Card from "react-bootstrap/Card";
+import { AuthContext } from "../context/auth.context";
 
 //Import all the muscles images
 import abdominals from "./../images/abdominals.png";
@@ -22,14 +23,11 @@ import neck from "./../images/neck.png";
 import quadriceps from "./../images/quadriceps.png";
 import traps from "./../images/traps.png";
 import triceps from "./../images/triceps.png";
-import { AuthContext } from "../context/auth.context";
 
 function WorkoutAccordion(props) {
   const [update, setUpdate] = useState(false);
   const [editBtn, setEditBtn] = useState("Edit");
-  const {user} = useContext(AuthContext)
-
-  const id = props.workout._id;
+  const { user } = useContext(AuthContext);
 
   function imageName(image) {
     switch (image) {
@@ -73,7 +71,7 @@ function WorkoutAccordion(props) {
 
   const handleDelete = () => {
     axios
-      .delete(`${process.env.REACT_APP_API_URL}/workouts/${id}`)
+      .delete(`${process.env.REACT_APP_API_URL}/workouts/${props.workout._id}`)
       .then(() => {
         props.setDeleteCheckcallback(true);
       })
@@ -140,7 +138,7 @@ function WorkoutAccordion(props) {
         )}
         {
           
-          (user &&  (user._id = props.workout.owner && (
+          (user &&  (user._id === props.workout.owner && (
             <>
               <Button
                 onClick={() =>

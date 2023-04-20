@@ -18,16 +18,14 @@ function ExerciseDetail(props) {
   const [updateName, setUpdateName] = useState("Update");
   const [deleteSure, setDeleteSure] = useState(false);
   const navigate = useNavigate();
-
   const getExercise = () => {
     axios
-      .get(
-        `${process.env.REACT_APP_API_URL}/exercises/${id}` ||
-          `http://localhost:5005/api/exercises/${id}`
+    .get(
+      `${process.env.REACT_APP_API_URL}/exercises/${id}` ||
+      `http://localhost:5005/api/exercises/${id}`
       )
       .then((response) => {
-        console.log("id: ", id);
-        console.log("response: ", response.data);
+        
         setExercise(response.data);
         setName(response.data.name);
         setType(response.data.type);
