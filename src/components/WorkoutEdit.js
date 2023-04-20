@@ -12,9 +12,21 @@ function WorkoutEdit(props) {
   const navigate = useNavigate();
   
 
+  function handleCheckboxChange(event) {
+    const value = event.target.value;
+    const checked = event.target.checked;
+
+    if (checked) {
+      setExercises([...exercises, value]);
+    } else {
+      setExercises(exercises.filter((item) => item !== value));
+    }
+  }
+
   function handleData(event) {
     event.preventDefault();
     props.setEditCheckcallback(true);
+    props.setUpdatecallback(false)
     const workOutData = {
       name,
       series,
@@ -25,7 +37,6 @@ function WorkoutEdit(props) {
     axios
       .put(`${process.env.REACT_APP_API_URL}/workouts/${id}/edit`, workOutData)
       .then(() => {
-        navigate("/workouts");
       })
       .catch((e) => {
         console.log("error...", e);
@@ -96,18 +107,22 @@ function WorkoutEdit(props) {
 
         <br />
 
-        {props.exercisesSelect &&
-          props.exercisesSelect.map((exercise) => {
-            return (
-              <div key={exercise._id} className="mb-3">
-                <Form.Check
-                  type={"checkbox"}
-                  id={exercise._id}
-                  label={exercise.name}
-                />
-              </div>
-            );
-          })}
+        <div style={{ overflow: "scroll", height: "25rem" }}>
+          {props.exercisesSelect &&
+            props.exercisesSelect.map((exercise) => {
+              return (
+                <div key={exercise._id} className="mb-3">
+                  <Form.Check
+                    value={exercise._id}
+                    type={"checkbox"}
+                    label={exercise.name}
+                    checked={exercises.includes(exercise._id)}
+                    onChange={handleCheckboxChange}
+                  />
+                </div>
+              );
+            })}
+        </div>
 
         <br />
         <Button type="submit" style={{ width: "30%" }}>
