@@ -24,6 +24,7 @@ function WorkoutEdit(props) {
   function handleData(event) {
     event.preventDefault();
     props.setEditCheckcallback(true);
+    props.setEditBtnCallback("Edit")
     props.setUpdatecallback(false)
     const workOutData = {
       name,
@@ -136,13 +137,14 @@ function WorkoutEdit(props) {
                     checked={exercises.includes(exercise._id)}
                     onChange={handleCheckboxChange}
                   />
+                  <hr />
                 </div>
               );
             })}
         </div>
 
         <br />
-        <Button type="submit" style={{ width: "30%" }}>
+        <Button type="submit" style={{ width: "30%" , "margin-bottom":"20px"}}>
           Update
         </Button>
       </Form>

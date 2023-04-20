@@ -97,6 +97,13 @@ function WorkoutAccordion(props) {
             ) : (
               <h5>Every exercises have 1 reps!</h5>
             )}
+            {props.workout.series > 1 ? (
+              <h5 style={{margin: "30px"}}>
+                Repeat all the exercises <b>{props.workout.series}</b> times!
+              </h5>
+            ) : (
+              <h5 style={{margin: "30px"}}>Repeat all the exercises 1 time only!</h5>
+            )}
 
             <h2>The exercises of the workout:</h2>
             {/* {props.workout.exercises.length > 0 &&
@@ -133,13 +140,7 @@ function WorkoutAccordion(props) {
                 );
               })}</div>
             <br />
-            {props.workout.series > 1 ? (
-              <h5 style={{margin: "30px"}}>
-                Repeat all the exercises <b>{props.workout.series}</b> times!
-              </h5>
-            ) : (
-              <h5 style={{margin: "30px"}}>Repeat all the exercises 1 time only!</h5>
-            )}
+            
           </>
         )}
         {update && (
@@ -149,11 +150,13 @@ function WorkoutAccordion(props) {
             setExercisesSelectcallback={props.setExercisesSelectcallback}
             exercisesSelect={props.exercisesSelect}
             setUpdatecallback={setUpdate}
+            setEditBtnCallback={setEditBtn}
           />
         )}
         {user && user._id === props.workout.owner && (
           <>
             <Button
+            style={{ margin: "5px 10px" ,padding : "5px 30px"}}
               onClick={() =>
                 update
                   ? (setUpdate(false), setEditBtn("Edit"))
@@ -164,7 +167,7 @@ function WorkoutAccordion(props) {
             </Button>
             <Button
               variant="danger"
-              style={{ margin: "5px" }}
+              style={{ margin: "5px 10px" ,padding : "5px 30px"}}
               onClick={handleDelete}
             >
               Delete
