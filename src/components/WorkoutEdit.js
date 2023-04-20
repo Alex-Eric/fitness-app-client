@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Button, Form, FloatingLabel } from "react-bootstrap";
-import MuscleGroupImage from "./MuscleGroupImage.tsx";
 
 function WorkoutEdit(props) {
   const id = props.workout._id;

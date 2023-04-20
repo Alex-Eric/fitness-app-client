@@ -122,13 +122,14 @@ function ExerciseForm(props) {
             onChange={(e) => setMuscle(e.target.value)}
           >
             <option value={""}>Open this select menu</option>
-            {props.muscles && props.muscles.map((element) => (
+            {props.muscles && props.muscles.map((element) => (<>
               <option key={element._id} value={element.name}>
                 {element.name
                   .split("_")
                   .map((e) => e.charAt().toUpperCase() + e.slice(1))
                   .join(" ")}
               </option>
+            </>
             ))}
           </Form.Select>
         </FloatingLabel>
