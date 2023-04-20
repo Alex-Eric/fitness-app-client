@@ -32,7 +32,7 @@ function Login() {
       });
   };
   return (
-    <div style={{"margin":"20px 40%"}}>
+    <div className="login-register-page">
     <Form onSubmit={handleSubmit}>
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Email address</Form.Label>
@@ -57,7 +57,7 @@ function Login() {
         />
       </Form.Group>
       <Button variant="primary" type="submit">
-        Submit
+        Login
       </Button>
     </Form>
     { errorMessage && <p className="error-message">{errorMessage}</p> }
