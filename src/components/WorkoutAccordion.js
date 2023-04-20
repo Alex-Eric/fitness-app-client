@@ -87,6 +87,8 @@ function WorkoutAccordion(props) {
           <>
             {props.workout.series} Series
             <br />
+            {props.workout.reps} Reps per Exercise
+            <br />
             {props.workout.description}
             <br />
             {/* {props.workout.exercises.length > 0 &&
@@ -113,9 +115,7 @@ function WorkoutAccordion(props) {
                             {/* Display the muscle image */}
                             {imageName(filter.muscle)}
                             <Card.Body>
-                              <Card.Title>
-                                <h6>{filter.name}</h6>
-                              </Card.Title>
+                              <p>{filter.name}</p>
                             </Card.Body>
                           </Card>
                         </>
@@ -136,29 +136,26 @@ function WorkoutAccordion(props) {
             setUpdatecallback={setUpdate}
           />
         )}
-        {
-          
-          (user &&  (user._id === props.workout.owner && (
-            <>
-              <Button
-                onClick={() =>
-                  update
-                    ? (setUpdate(false), setEditBtn("Edit"))
-                    : (setUpdate(true), setEditBtn("Back"))
-                }
-              >
-                {editBtn}
-              </Button>
-              <Button
-                variant="danger"
-                style={{ margin: "5px" }}
-                onClick={handleDelete}
-              >
-                Delete
-              </Button>
-            </>
-          )))
-        }
+        {user && user._id === props.workout.owner && (
+          <>
+            <Button
+              onClick={() =>
+                update
+                  ? (setUpdate(false), setEditBtn("Edit"))
+                  : (setUpdate(true), setEditBtn("Back"))
+              }
+            >
+              {editBtn}
+            </Button>
+            <Button
+              variant="danger"
+              style={{ margin: "5px" }}
+              onClick={handleDelete}
+            >
+              Delete
+            </Button>
+          </>
+        )}
       </Accordion.Body>
     </Accordion.Item>
   );
