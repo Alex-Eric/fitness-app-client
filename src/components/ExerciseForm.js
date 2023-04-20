@@ -27,6 +27,7 @@ function ExerciseForm(props) {
         name: props.name,
         type: props.type,
         description: props.description,
+        reps: props.reps,
         muscle,
         owner:user._id
       })
@@ -82,6 +83,25 @@ function ExerciseForm(props) {
             Please provide a name
           </Form.Control.Feedback>
         </FloatingLabel>
+
+        <FloatingLabel
+          controlId="floatingInput"
+          label="Reps"
+          className="mb-3"
+        >
+          <Form.Control
+            required
+            type="number"
+            name="reps"
+            value={props.reps}
+            onChange={(e) => props.setRepsCallback(e.target.value)}
+          />
+          <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+          <Form.Control.Feedback type="invalid">
+            Please provide a name
+          </Form.Control.Feedback>
+        </FloatingLabel>
+
         <FloatingLabel controlId="floatingSelect" label="Exercise's type">
           <Form.Select
             required
