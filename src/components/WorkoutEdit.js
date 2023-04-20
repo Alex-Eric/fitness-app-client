@@ -10,11 +10,23 @@ function WorkoutEdit(props) {
   const [description, setDescription] = useState(props.workout.description);
   const [exercises, setExercises] = useState(props.workout.exercises);
   const navigate = useNavigate();
-  const [exercisesSelect, setExercisesSelect] = useState(null);
+  
+
+  function handleCheckboxChange(event) {
+    const value = event.target.value;
+    const checked = event.target.checked;
+
+    if (checked) {
+      setExercises([...exercises, value]);
+    } else {
+      setExercises(exercises.filter((item) => item !== value));
+    }
+  }
 
   function handleData(event) {
     event.preventDefault();
     props.setEditCheckcallback(true);
+    props.setUpdatecallback(false)
     const workOutData = {
       name,
       series,
@@ -25,28 +37,12 @@ function WorkoutEdit(props) {
     axios
       .put(`${process.env.REACT_APP_API_URL}/workouts/${id}/edit`, workOutData)
       .then(() => {
-        navigate("/workouts");
       })
       .catch((e) => {
         console.log("error...", e);
       });
   }
-  const getAllExercisesSelect = () => {
-    axios
-      .get(
-        `${process.env.REACT_APP_API_URL}/exercises` ||
-          "http://localhost:5005/api/exercises"
-      )
-      .then((response) => {
-        setExercisesSelect(response.data);
-      })
-      .catch((error) => {
-        console.log("error: ", error);
-      });
-  };
-  useEffect(() => {
-    getAllExercisesSelect();
-  }, []);
+  
 
   return (
     <>
@@ -111,31 +107,23 @@ function WorkoutEdit(props) {
 
         <br />
 
-        <FloatingLabel
-          controlId="floatingInput"
-          label="Select Exercises"
-          className="mb-3"
-        >
-          <Form.Select aria-label="Default select example">
-            <option value="">Open this select menu</option>
-            
-            {exercisesSelect &&
-          exercisesSelect.map((exercise) => {
-            return(
-            <option>{exercise.name}</option>
-            )
-          })}
+        <div style={{ overflow: "scroll", height: "25rem" }}>
+          {props.exercisesSelect &&
+            props.exercisesSelect.map((exercise) => {
+              return (
+                <div key={exercise._id} className="mb-3">
+                  <Form.Check
+                    value={exercise._id}
+                    type={"checkbox"}
+                    label={exercise.name}
+                    checked={exercises.includes(exercise._id)}
+                    onChange={handleCheckboxChange}
+                  />
+                </div>
+              );
+            })}
+        </div>
 
-            
-            
-          </Form.Select>
-
-          <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-          <Form.Control.Feedback type="invalid">
-            Please provide instructions
-          </Form.Control.Feedback>
-        </FloatingLabel>
-        
         <br />
         <Button type="submit" style={{ width: "30%" }}>
           Update
