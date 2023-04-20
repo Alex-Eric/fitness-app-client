@@ -85,10 +85,8 @@ function WorkoutAccordion(props) {
       <Accordion.Body>
         {!update && (
           <>
-            {props.workout.series} Series
-            <br />
-            {props.workout.description}
-            <br />
+            <p><h3>Read the instructions before go farther:</h3>{props.workout.description}</p>
+            <h2>The exercises of the workout:</h2>
             {/* {props.workout.exercises.length > 0 &&
               `Exercises: ${props.workout.exercises}` + <br />}
             {props.workout.description} */}
@@ -125,6 +123,8 @@ function WorkoutAccordion(props) {
                 );
               })}
             <br />
+            {props.workout.series > 1 ?<h5>Repeat all the exercises  <b>{props.workout.series}</b> times!</h5> : <h5>Repeat all the exercises 1 time only!</h5>}
+            
           </>
         )}
         {update && (

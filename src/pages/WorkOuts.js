@@ -79,7 +79,7 @@ function Workouts() {
 
 
       <br />
-      <Accordion defaultActiveKey="0">
+      <Accordion defaultActiveKey="0" style={{margin: "0 -25%"}}>
         {workouts ? (
           workouts.map((workout) => {
             return (
