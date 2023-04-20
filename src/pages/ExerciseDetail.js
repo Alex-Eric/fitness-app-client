@@ -1,8 +1,9 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button, Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import ExerciseForm from "../components/ExerciseForm";
+import { AuthContext } from "../context/auth.context";
 
 function ExerciseDetail(props) {
   const [name, setName] = useState("");
@@ -11,6 +12,7 @@ function ExerciseDetail(props) {
   const [validated, setValidated] = useState(false);
 
   const { id } = props;
+  const { user } = useContext(AuthContext);
   const [exercise, setExercise] = useState(null);
   const [update, setUpdate] = useState(true);
   const [updateName, setUpdateName] = useState("Update");
@@ -20,12 +22,12 @@ function ExerciseDetail(props) {
   const getExercise = () => {
     axios
       .get(
-         `${process.env.REACT_APP_API_URL}/exercises/${id}` ||
+        `${process.env.REACT_APP_API_URL}/exercises/${id}` ||
           `http://localhost:5005/api/exercises/${id}`
       )
       .then((response) => {
-        console.log("id: ",id)
-        console.log("response: ",response.data)
+        console.log("id: ", id);
+        console.log("response: ", response.data);
         setExercise(response.data);
         setName(response.data.name);
         setType(response.data.type);
@@ -35,17 +37,17 @@ function ExerciseDetail(props) {
         console.log("error: ", error);
       });
   };
-  
+
   const handleDelete = () => {
     axios
-    .delete(`${process.env.REACT_APP_API_URL}/exercises/${id}`)
-    .then(() => {
-      navigate("/exercises");
-      props.setIdCallback("")
-    })
-    .catch((error) => {
-      console.log("error: ", error);
-    });
+      .delete(`${process.env.REACT_APP_API_URL}/exercises/${id}`)
+      .then(() => {
+        navigate("/exercises");
+        props.setIdCallback("");
+      })
+      .catch((error) => {
+        console.log("error: ", error);
+      });
   };
 
   useEffect(() => {
@@ -58,6 +60,12 @@ function ExerciseDetail(props) {
         <>
           {update ? (
             <>
+              <Button
+                onClick={() => props.setDisplayExerciseCallback(false)}
+                style={{ "margin-bottom": "20px" }}
+              >
+                Back
+              </Button>
               <h1>{exercise.name}</h1>
               <h5>
                 {exercise.type
@@ -86,47 +94,50 @@ function ExerciseDetail(props) {
                 muscles={props.muscles}
                 setMusclesCallback={props.setMusclesCallback}
                 setUpdateCallback={setUpdate}
-                buttonName={"Send"}
+                buttonName={"Update"}
                 submit={"update"}
               />
             </>
           )}
-          <Button
-            variant="danger"
-            style={{ width: "20%", "margin-right": "20px" }}
-            onClick={() =>
-              update ? (
-                <>
-                  {setUpdate(false)} {setUpdateName("Back")}
-                </>
+          {user && user._id === exercise.owner && (
+            <>
+              <Button
+                style={{ width: "20%", "margin-right": "20px" }}
+                onClick={() =>
+                  update ? (
+                    <>
+                      {setUpdate(false)} {setUpdateName("Cancel")}
+                    </>
+                  ) : (
+                    <>
+                      {setUpdate(true)} {setUpdateName("Update")}
+                    </>
+                  )
+                }
+              >
+                {updateName}
+              </Button>
+              {deleteSure ? (
+                <Button
+                  variant="danger"
+                  style={{ width: "20%" }}
+                  onClick={() => {
+                    props.setDisplayExerciseCallback(false);
+                    handleDelete();
+                  }}
+                >
+                  Are you sure?
+                </Button>
               ) : (
-                <>
-                  {setUpdate(true)} {setUpdateName("Update")}
-                </>
-              )
-            }
-          >
-            {updateName}
-          </Button>
-          {deleteSure ? (
-            <Button
-              variant="danger"
-              style={{ width: "20%" }}
-              onClick={() => {
-                props.setDisplayExerciseCallback(false);
-                handleDelete();
-              }}
-            >
-              Are you sure?
-            </Button>
-          ) : (
-            <Button
-              variant="danger"
-              style={{ width: "20%" }}
-              onClick={() => setDeleteSure(true)}
-            >
-              Delete
-            </Button>
+                <Button
+                  variant="danger"
+                  style={{ width: "20%" }}
+                  onClick={() => setDeleteSure(true)}
+                >
+                  Delete
+                </Button>
+              )}
+            </>
           )}
         </>
       ) : (

@@ -5,6 +5,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { LinkContainer } from "react-router-bootstrap";
 import { AuthContext } from "../context/auth.context";
+import Logo from "./../images/logo.png"
 
 function NavbarF() {
   const { isLoggedIn, user, logOutUser } = useContext(AuthContext);
@@ -12,7 +13,9 @@ function NavbarF() {
   return (
     <Navbar bg="light" expand="lg" sticky="top" collapseOnSelect>
       <Container>
-        <Navbar.Brand>Fitness App</Navbar.Brand>
+        <LinkContainer to="/">
+          <Navbar.Brand>Fitness App</Navbar.Brand>
+        </LinkContainer>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
@@ -32,12 +35,16 @@ function NavbarF() {
           <Nav>
             {isLoggedIn ? (
               <>
-              <div className="user">
-                <Navbar.Brand>{user && user.name.charAt(0).toUpperCase() + user.name.slice(1).toLowerCase()}</Navbar.Brand>
+                <div className="user">
+                  <Navbar.Brand>
+                    {user &&
+                      user.name.charAt(0).toUpperCase() +
+                        user.name.slice(1).toLowerCase()}
+                  </Navbar.Brand>
                 </div>
-                <div style={{"margin":"10px"}}>
-                <Button onClick={logOutUser}>Log out</Button>
-              </div>
+                <div style={{ margin: "0 10px" }}>
+                  <Button onClick={logOutUser}>Log out</Button>
+                </div>
               </>
             ) : (
               <div className="login-register">
