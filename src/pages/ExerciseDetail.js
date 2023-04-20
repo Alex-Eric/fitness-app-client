@@ -20,7 +20,7 @@ function ExerciseDetail(props) {
   const getExercise = () => {
     axios
       .get(
-        // `${process.env.REACT_APP_API_URL}/exercises/${id}` ||
+         `${process.env.REACT_APP_API_URL}/exercises/${id}` ||
           `http://localhost:5005/api/exercises/${id}`
       )
       .then((response) => {
