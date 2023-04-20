@@ -86,13 +86,23 @@ function WorkoutAccordion(props) {
         {!update && (
           <>
             <br />
-            <p><h3>Read the instructions before go farther:</h3>{props.workout.description}</p>
-            <h5>Repeat all the exercises {props.workout.reps} times!</h5>
+            <p>
+              <h3>Read the instructions before go farther:</h3>
+              {props.workout.description}
+            </p>
+            {props.workout.reps > 1 ? (
+              <h5>
+                Every exercises have <b>{props.workout.reps}</b> reps!
+              </h5>
+            ) : (
+              <h5>Every exercises have 1 reps!</h5>
+            )}
+
             <h2>The exercises of the workout:</h2>
             {/* {props.workout.exercises.length > 0 &&
               `Exercises: ${props.workout.exercises}` + <br />}
             {props.workout.description} */}
-            {props.workout.exercises.length > 0 &&
+            <div style={{height : "25rem",overflow:"scroll"}}>{props.workout.exercises.length > 0 &&
               props.workout.exercises.map((exercise) => {
                 return (
                   props.exercisesSelect &&
@@ -103,7 +113,7 @@ function WorkoutAccordion(props) {
                           <Card
                             style={{
                               width: "11rem",
-                              height: "16rem",
+                              height: "18rem",
                               padding: "20px",
                               margin: "5px",
                               display: "inline-block",
@@ -121,10 +131,15 @@ function WorkoutAccordion(props) {
                     );
                   })
                 );
-              })}
+              })}</div>
             <br />
-            {props.workout.series > 1 ?<h5>Repeat all the exercises  <b>{props.workout.series}</b> times!</h5> : <h5>Repeat all the exercises 1 time only!</h5>}
-            
+            {props.workout.series > 1 ? (
+              <h5 style={{margin: "30px"}}>
+                Repeat all the exercises <b>{props.workout.series}</b> times!
+              </h5>
+            ) : (
+              <h5 style={{margin: "30px"}}>Repeat all the exercises 1 time only!</h5>
+            )}
           </>
         )}
         {update && (

@@ -38,12 +38,12 @@ code {
 
 /*Navbar login*/
 
-.login-register{
+.login-register {
   display: flex
 }
 
 /* Login and register page */
-.login-register-page{
+.login-register-page {
   margin: 20px 35%
 }
 
@@ -109,13 +109,13 @@ nav a {
 
 /* Exercise Details*/
 
-.display-exercise-details{
+.display-exercise-details {
   width: 40%;
   position: fixed;
   right: 0px;
 }
 
-.display-exercise-half-screen{
+.display-exercise-half-screen {
   width: 60%;
 }
 
@@ -301,14 +301,16 @@ footer {
 
 
 @media screen and (max-width:991px) {
-  .user{
+  .user {
     display: block;
     margin-left: 14px;
   }
-  .login-register{
+
+  .login-register {
     display: block
   }
-  .display-exercise-details{
+
+  .display-exercise-details {
     width: 100%;
     position: fixed;
     top: 50%;
@@ -317,11 +319,13 @@ footer {
     overflow: scroll;
     max-height: 80%;
   }
-  .display-exercise-half-screen{
+
+  .display-exercise-half-screen {
     width: 100%;
     opacity: 0.1
   }
-  .login-register-page{
+
+  .login-register-page {
     margin: 20px 10%
   }
 }

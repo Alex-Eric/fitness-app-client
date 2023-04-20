@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import ExerciseCard from "../components/ExerciseCard";
-import { Button, Spinner } from "react-bootstrap";
+import { Button, FloatingLabel, Spinner, Form } from "react-bootstrap";
 import ExerciseDetail from "./ExerciseDetail";
 import ExerciseForm from "../components/ExerciseForm";
 import { useNavigate } from "react-router-dom";
@@ -19,12 +19,13 @@ function Exercises(props) {
   const [displayExercise, setDisplayExercise] = useState(false);
   const [displayCreateExercise, setDisplayCreateExercise] = useState(false);
 
-  //Form states varaibles
+  //Form states variables
   const [name, setName] = useState("");
   const [type, setType] = useState("");
   const [description, setDescription] = useState("");
   const [validated, setValidated] = useState(false);
   const [id, setId] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
 
   const { isLoggedIn } = useContext(AuthContext);
 
@@ -66,25 +67,25 @@ function Exercises(props) {
 
   return (
     <>
-      {!displayExercise && <Button
-        style={{ margin: "20px" }}
-        onClick={() => {
-          displayCreateExercise
-            ? setDisplayCreateExercise(false)
-            : setDisplayCreateExercise(true);
-        }}
-      >
-        {displayCreateExercise ? "Cancel" : "Create an exercise!"}
-      </Button>}
-      
-
+      {!displayExercise && (
+        <Button
+          style={{ margin: "20px" }}
+          onClick={() => {
+            displayCreateExercise
+              ? setDisplayCreateExercise(false)
+              : setDisplayCreateExercise(true);
+          }}
+        >
+          {displayCreateExercise ? "Cancel" : "Create an exercise!"}
+        </Button>
+      )}
       <br />
       {displayCreateExercise && (
         <>
           <br />
 
           {isLoggedIn ? (
-              props.muscles && (
+            props.muscles && (
               <ExerciseForm
                 name={name}
                 setNameCallback={setName}
@@ -101,69 +102,179 @@ function Exercises(props) {
                 submit={"create"}
                 setDisplayCreateExerciseCallback={setDisplayCreateExercise}
               />
-              )
+            )
           ) : (
             <Login />
           )}
 
           <br />
-
         </>
       )}
       {displayExercise ? (
-        
         exercises && users ? (
-          <div>
-            <div style={{ display: "flex" }}>
-              <div className="display-exercise-half-screen">
-                {exercises
-                  .sort((a, b) => {
-                    return new Date(b.createdAt) - new Date(a.createdAt);
-                  })
-                  .map((exercise) => {
+          <>
+            <div>
+              <div style={{ display: "flex" }}>
+                <div className="display-exercise-half-screen">
+                  <FloatingLabel
+                    controlId="floatingInput"
+                    label="Search by name"
+                    className="mb-3"
+                    style={{ margin: "0 25%" }}
+                  >
+                    <Form.Control
+                      required
+                      type="text"
+                      placeholder=" "
+                      name="name"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                    />
+                  </FloatingLabel>
+
+                  {props.muscles.map((muscleDetail) => {
+                    const filteredExercises =
+                      exercises &&
+                      exercises
+                        .filter((filter) =>
+                          filter.name
+                            .toLowerCase()
+                            .includes(searchQuery.toLowerCase())
+                        )
+                        .sort((a, b) => {
+                          return new Date(b.createdAt) - new Date(a.createdAt);
+                        })
+                        .filter(
+                          (exercise) => exercise.muscle === muscleDetail.name
+                        );
                     return (
-                      <ExerciseCard
-                        key={exercise._id}
-                        exercises={exercise}
-                        users={users}
-                        setIdCallback={setId}
-                        setDisplayExerciseCallback={setDisplayExercise}
-                        muscles={props.muscles}
-                      />
+                      <div style={{ margin: "40px 0" }}>
+                        {filteredExercises && filteredExercises.length > 0 && (
+                          <>
+                            <h1>
+                              {muscleDetail.name
+                                .split("_")
+                                .map(
+                                  (e) => e.charAt().toUpperCase() + e.slice(1)
+                                )
+                                .join(" ")}
+                            </h1>
+                            <hr
+                              style={{
+                                "border-top": "10px solid grey",
+                                margin: "40px 20%",
+                                "border-radius": "100px",
+                              }}
+                            />
+                            {filteredExercises &&
+                            filteredExercises.length === 0 ? (
+                              <h5>No exercises found....</h5>
+                            ) : (
+                              filteredExercises &&
+                              filteredExercises.map((exercise) => (
+                                <ExerciseCard
+                                  key={exercise._id}
+                                  exercises={exercise}
+                                  users={users}
+                                  setIdCallback={setId}
+                                  setDisplayExerciseCallback={
+                                    setDisplayExercise
+                                  }
+                                  muscles={props.muscles}
+                                />
+                              ))
+                            )}
+                          </>
+                        )}
+                      </div>
                     );
                   })}
-              </div>
-              <div className="display-exercise-details">
-                <ExerciseDetail
-                  id={id}
-                  setDisplayExerciseCallback={setDisplayExercise}
-                  setIdCallback={setId}
-                  muscles={props.muscles}
-                  setMusclesCallback={props.setMusclesCallback}
-                />
+                </div>
+                <div className="display-exercise-details">
+                  <ExerciseDetail
+                    id={id}
+                    setDisplayExerciseCallback={setDisplayExercise}
+                    setIdCallback={setId}
+                    muscles={props.muscles}
+                    setMusclesCallback={props.setMusclesCallback}
+                  />
+                </div>
               </div>
             </div>
-          </div>
+          </>
         ) : (
           <Spinner animation="border" />
         )
-      ) : exercises ? (
-        exercises
-          .sort((a, b) => {
-            return new Date(b.createdAt) - new Date(a.createdAt);
-          })
-          .map((exercise) => (
-            <ExerciseCard
-              key={exercise._id}
-              exercises={exercise}
-              users={users}
-              setDisplayExerciseCallback={setDisplayExercise}
-              setIdCallback={setId}
-              muscles={props.muscles}
-            />
-          ))
       ) : (
-        <Spinner animation="border" />
+        props.muscles && (
+          <>
+            <FloatingLabel
+              controlId="floatingInput"
+              label="Search by name"
+              className="mb-3"
+              style={{ margin: "0 30%" }}
+            >
+              <Form.Control
+                required
+                type="text"
+                placeholder=" "
+                name="name"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </FloatingLabel>
+            {props.muscles.map((muscleDetail) => {
+              const filteredExercises =
+                exercises &&
+                exercises
+                  .filter((filter) =>
+                    filter.name
+                      .toLowerCase()
+                      .includes(searchQuery.toLowerCase())
+                  )
+                  .sort((a, b) => {
+                    return new Date(b.createdAt) - new Date(a.createdAt);
+                  })
+                  .filter((exercise) => exercise.muscle === muscleDetail.name);
+              return (
+                <div style={{ margin: "40px 0" }}>
+                  {filteredExercises && filteredExercises.length > 0 && (
+                    <>
+                      <h1>
+                        {muscleDetail.name
+                          .split("_")
+                          .map((e) => e.charAt().toUpperCase() + e.slice(1))
+                          .join(" ")}
+                      </h1>
+                      <hr
+                        style={{
+                          "border-top": "10px solid grey",
+                          margin: "40px 20%",
+                          "border-radius": "100px",
+                        }}
+                      />
+                      {filteredExercises && filteredExercises.length === 0 ? (
+                        <h5>No exercises found....</h5>
+                      ) : (
+                        filteredExercises &&
+                        filteredExercises.map((exercise) => (
+                          <ExerciseCard
+                            key={exercise._id}
+                            exercises={exercise}
+                            users={users}
+                            setIdCallback={setId}
+                            setDisplayExerciseCallback={setDisplayExercise}
+                            muscles={props.muscles}
+                          />
+                        ))
+                      )}
+                    </>
+                  )}
+                </div>
+              );
+            })}
+          </>
+        )
       )}
     </>
   );
