@@ -6,6 +6,7 @@ import { AuthContext } from "../context/auth.context";
 function WorkOutsCreate(props) {
   const [name, setName] = useState("");
   const [series, setSeries] = useState("");
+  const [reps, setReps] = useState("");
   const [description, setDescription] = useState("");
   const [validated, setValidated] = useState(false);
   const [exercises, setExercises] = useState([]);
@@ -29,6 +30,7 @@ function WorkOutsCreate(props) {
     const workOutData = {
       name,
       series,
+      reps,
       description,
       exercises,
       owner: user._id
@@ -41,6 +43,7 @@ function WorkOutsCreate(props) {
         props.setCreateBtncallback("Create");
         setName("");
         setSeries("");
+        setReps("");
         setDescription("");
       })
       .catch((e) => {
@@ -90,9 +93,28 @@ function WorkOutsCreate(props) {
           />
           <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
           <Form.Control.Feedback type="invalid">
-            Please provide a name
+            Please provide a Series
           </Form.Control.Feedback>
         </FloatingLabel>
+
+        <FloatingLabel
+          controlId="floatingInput"
+          label="Reps"
+          className="mb-3"
+        >
+          <Form.Control
+            required
+            type="number"
+            name="reps"
+            value={reps}
+            onChange={(e) => setReps(e.target.value)}
+          />
+          <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+          <Form.Control.Feedback type="invalid">
+            Please provide a reps
+          </Form.Control.Feedback>
+        </FloatingLabel>
+
         <FloatingLabel
           controlId="floatingInput"
           label="Exercise intructions"

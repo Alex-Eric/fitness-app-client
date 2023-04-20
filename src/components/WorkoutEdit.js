@@ -1,16 +1,14 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { Button, Form, FloatingLabel } from "react-bootstrap";
 
 function WorkoutEdit(props) {
   const id = props.workout._id;
   const [name, setName] = useState(props.workout.name);
   const [series, setSeries] = useState(props.workout.series);
+  const [reps, setReps] = useState(props.workout.reps);
   const [description, setDescription] = useState(props.workout.description);
   const [exercises, setExercises] = useState(props.workout.exercises);
-  const navigate = useNavigate();
-  
 
   function handleCheckboxChange(event) {
     const value = event.target.value;
@@ -30,6 +28,7 @@ function WorkoutEdit(props) {
     const workOutData = {
       name,
       series,
+      reps,
       description,
       exercises,
     };
@@ -85,6 +84,24 @@ function WorkoutEdit(props) {
             Please provide a name
           </Form.Control.Feedback>
         </FloatingLabel>
+        <FloatingLabel
+          controlId="floatingInput"
+          label="Reps"
+          className="mb-3"
+        >
+          <Form.Control
+            required
+            type="number"
+            name="reps"
+            value={reps}
+            onChange={(e) => setReps(e.target.value)}
+          />
+          <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+          <Form.Control.Feedback type="invalid">
+            Please provide a reps
+          </Form.Control.Feedback>
+        </FloatingLabel>
+
         <FloatingLabel
           controlId="floatingInput"
           label="Exercise intructions"

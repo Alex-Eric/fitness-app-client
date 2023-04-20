@@ -85,7 +85,9 @@ function WorkoutAccordion(props) {
       <Accordion.Body>
         {!update && (
           <>
+            <br />
             <p><h3>Read the instructions before go farther:</h3>{props.workout.description}</p>
+            <h5>Repeat all the exercises {props.workout.reps} times!</h5>
             <h2>The exercises of the workout:</h2>
             {/* {props.workout.exercises.length > 0 &&
               `Exercises: ${props.workout.exercises}` + <br />}
@@ -111,9 +113,7 @@ function WorkoutAccordion(props) {
                             {/* Display the muscle image */}
                             {imageName(filter.muscle)}
                             <Card.Body>
-                              <Card.Title>
-                                <h6>{filter.name}</h6>
-                              </Card.Title>
+                              <p>{filter.name}</p>
                             </Card.Body>
                           </Card>
                         </>
@@ -136,29 +136,26 @@ function WorkoutAccordion(props) {
             setUpdatecallback={setUpdate}
           />
         )}
-        {
-          
-          (user &&  (user._id === props.workout.owner && (
-            <>
-              <Button
-                onClick={() =>
-                  update
-                    ? (setUpdate(false), setEditBtn("Edit"))
-                    : (setUpdate(true), setEditBtn("Back"))
-                }
-              >
-                {editBtn}
-              </Button>
-              <Button
-                variant="danger"
-                style={{ margin: "5px" }}
-                onClick={handleDelete}
-              >
-                Delete
-              </Button>
-            </>
-          )))
-        }
+        {user && user._id === props.workout.owner && (
+          <>
+            <Button
+              onClick={() =>
+                update
+                  ? (setUpdate(false), setEditBtn("Edit"))
+                  : (setUpdate(true), setEditBtn("Back"))
+              }
+            >
+              {editBtn}
+            </Button>
+            <Button
+              variant="danger"
+              style={{ margin: "5px" }}
+              onClick={handleDelete}
+            >
+              Delete
+            </Button>
+          </>
+        )}
       </Accordion.Body>
     </Accordion.Item>
   );
