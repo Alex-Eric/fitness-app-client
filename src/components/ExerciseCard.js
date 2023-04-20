@@ -79,7 +79,7 @@ function ExerciseCard(props) {
           padding: "20px",
           margin: "5px",
           display: "inline-block",
-          overflow: "scroll",
+          overflow: "hidden",
           textDecoration: "none",
           color: "black",
         }}
