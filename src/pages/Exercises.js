@@ -22,6 +22,7 @@ function Exercises(props) {
   //Form states variables
   const [name, setName] = useState("");
   const [type, setType] = useState("");
+  const [muscle,setMuscle] = useState(null)
   const [description, setDescription] = useState("");
   const [validated, setValidated] = useState(false);
   const [id, setId] = useState("");
@@ -31,6 +32,165 @@ function Exercises(props) {
 
   //Save users
   const [users, setUsers] = useState("");
+
+  //description for each muscle exercises
+  const descriptionExercise = (name) => {
+    switch (name) {
+      case "abdominals":
+        return (
+          <p>
+            {" "}
+            In the following exercises, you'll be able to work on your abdominal
+            muscles. These muscles are located in your midsection and are
+            responsible for supporting your spine and helping you maintain good
+            posture.
+          </p>
+        );
+      case "abductors":
+        return (
+          <p>
+            These exercises will help you work on your abductor muscles, which
+            are located in your hips and thighs. These muscles are responsible
+            for moving your legs away from your body's midline.
+          </p>
+        );
+      case "adductors":
+        return (
+          <p>
+            {" "}
+            In the following exercises, you'll be able to work on your adductor
+            muscles, which are also located in your hips and thighs. These
+            muscles are responsible for moving your legs towards your body's
+            midline.
+          </p>
+        );
+      case "biceps":
+        return (
+          <p>
+            These exercises will help you work on your bicep muscles, which are
+            located in your upper arms. These muscles are responsible for
+            flexing your elbow joint and helping you lift objects towards your
+            body.
+          </p>
+        );
+      case "calves":
+        return (
+          <p>
+            {" "}
+            In the following exercises, you'll be able to work on your calf
+            muscles, which are located in the lower part of your legs. These
+            muscles are responsible for helping you push off the ground when
+            walking or running.
+          </p>
+        );
+      case "chest":
+        return (
+          <p>
+            {" "}
+            These exercises will help you work on your chest muscles, which are
+            located in your upper body. These muscles are responsible for
+            helping you push objects away from your body and assisting with
+            movements like pushing and pulling.
+          </p>
+        );
+      case "forearms":
+        return (
+          <p>
+            {" "}
+            In the following exercises, you'll be able to work on your forearm
+            muscles, which are located in your lower arms. These muscles are
+            responsible for helping you grip and hold objects.
+          </p>
+        );
+      case "glutes":
+        return (
+          <p>
+            These exercises will help you work on your glute muscles, which are
+            located in your buttocks. These muscles are responsible for helping
+            you stand up straight, maintaining good posture, and assisting with
+            movements like walking and running.
+          </p>
+        );
+      case "hamstrings":
+        return (
+          <p>
+            {" "}
+            In the following exercises, you'll be able to work on your hamstring
+            muscles, which are located in the back of your thighs. These muscles
+            are responsible for helping you bend your knee joint and assisting
+            with movements like walking and running.
+          </p>
+        );
+      case "lats":
+        return (
+          <p>
+            These exercises will help you work on your latissimus dorsi muscles,
+            which are located in your back. These muscles are responsible for
+            helping you pull your arms towards your body and assisting with
+            movements like pulling and rowing.
+          </p>
+        );
+      case "lower_back":
+        return (
+          <p>
+            In the following exercises, you'll be able to work on your lower
+            back muscles, which are located in the lower part of your back.
+            These muscles are responsible for supporting your spine and helping
+            you maintain good posture.
+          </p>
+        );
+      case "middle_back":
+        return (
+          <p>
+            These exercises will help you work on your middle back muscles,
+            which are located in the middle part of your back. These muscles are
+            responsible for helping you maintain good posture and assisting with
+            movements like pulling and rowing.
+          </p>
+        );
+      case "neck":
+        return (
+          <p>
+            These exercises will help you work on your bicep muscles, which are
+            located in your upper arms. These muscles are responsible for
+            flexing your elbow joint and helping you lift objects towards your
+            body.
+          </p>
+        );
+
+      case "quadriceps":
+        return (
+          <p>
+            These exercises will help you work on your quadriceps muscles, which
+            are located in the front of your thighs. These muscles are
+            responsible for helping you straighten your knee joint and assisting
+            with movements like walking and running.
+          </p>
+        );
+      case "traps":
+        return (
+          <p>
+            In the following exercises, you'll be able to work on your trapezius
+            muscles, which are located in your upper back and neck. These
+            muscles are responsible for helping you move your shoulders and neck
+            and assisting with movements like shrugging.
+          </p>
+        );
+      case "triceps":
+        return (
+          <p>
+            {" "}
+            These exercises will help you work on your tricep muscles, which are
+            located in your upper arms. These muscles are responsible for
+            extending your elbow joint and assisting with movements like pushing
+            and pulling.
+          </p>
+        );
+      default:
+        <p></p>;
+        break;
+    }
+  };
 
   //Get all users
   const getAllUsers = () => {
@@ -63,10 +223,12 @@ function Exercises(props) {
   //Get the users only one time
   useEffect(() => {
     getAllExercises();
-  }, [id, displayCreateExercise]);
+  }, [id, displayCreateExercise,displayExercise]);
 
   return (
     <>
+    <br />
+    <h1>Exercises</h1>
       {!displayExercise && (
         <Button
           style={{ margin: "20px" }}
@@ -93,6 +255,8 @@ function Exercises(props) {
                 setTypeCallback={setType}
                 description={description}
                 setDescriptionCallback={setDescription}
+                muscle={muscle}
+                setMuscleCallback={setMuscle}
                 muscles={props.muscles}
                 setMusclesCallback={props.setMuscleCallback}
                 validated={validated}
@@ -166,6 +330,7 @@ function Exercises(props) {
                                 "border-radius": "100px",
                               }}
                             />
+                            {descriptionExercise(muscleDetail.name)}
                             {filteredExercises &&
                             filteredExercises.length === 0 ? (
                               <h5>No exercises found....</h5>
@@ -194,7 +359,10 @@ function Exercises(props) {
                   <ExerciseDetail
                     id={id}
                     setDisplayExerciseCallback={setDisplayExercise}
+                    setDisplayCreateExerciseCallback={setDisplayCreateExercise}
                     setIdCallback={setId}
+                    muscle={muscle}
+                    setMuscleCallback={setMuscle}
                     muscles={props.muscles}
                     setMusclesCallback={props.setMusclesCallback}
                   />
@@ -253,6 +421,7 @@ function Exercises(props) {
                           "border-radius": "100px",
                         }}
                       />
+                      {descriptionExercise(muscleDetail.name)}
                       {filteredExercises && filteredExercises.length === 0 ? (
                         <h5>No exercises found....</h5>
                       ) : (

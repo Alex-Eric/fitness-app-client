@@ -43,8 +43,11 @@ function Workouts() {
     setDeleteCheck(false);
     setEditCheck(false);
   }, [deleteCheck, editCheck, createCheck]);
+
+
   return (
     <div style={{ margin: " 0 20%" }}>
+      <br />
       <h1>Workouts</h1>
       <Button
           onClick={() =>

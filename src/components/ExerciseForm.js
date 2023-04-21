@@ -4,11 +4,9 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../context/auth.context";
 
 function ExerciseForm(props) {
-  const [muscle,setMuscle] = useState(null)
+  const [errorMessage, setErrorMessage] = useState(undefined);
+  const { user } = useContext(AuthContext);
 
-  const {user} = useContext(AuthContext)
-
-  console.log(user)
   const types = [
     "strength",
     "olympic_weightlifting",
@@ -18,46 +16,56 @@ function ExerciseForm(props) {
     "stretching",
     "plyometrics",
   ];
+
+
+
   const handleSubmit = (event) => {
     event.preventDefault();
     props.setValidatedCallback(true);
+
     if (props.submit === "create") {
       axios
-      .post(`${process.env.REACT_APP_API_URL}/exercises/create`, {
-        name: props.name,
-        type: props.type,
-        description: props.description,
-        muscle,
-        owner:user._id
-      })
-      .then((response) => {
-        console.log("RESPONSE: ",response)
-        props.setDisplayCreateExerciseCallback(false);
-        props.setNameCallback("");
-        props.setTypeCallback("");
-        props.setDescriptionCallback("");
-        props.setValidatedCallback(false);
-        props.navigate("/exercises");
-      })
-      .catch((err) => console.log("Error: ", err));
-      console.log("IN")
+        .post(`${process.env.REACT_APP_API_URL}/exercises/create`, {
+          name: props.name,
+          type: props.type,
+          description: props.description,
+          muscle: props.muscle,
+          owner: user._id,
+        })
+        .then((response) => {
+          console.log("RESPONSE: ", response);
+          props.setDisplayCreateExerciseCallback(false);
+          props.setNameCallback("");
+          props.setTypeCallback("");
+          props.setDescriptionCallback("");
+          props.setValidatedCallback(false);
+          props.navigate("/exercises");
+        })
+        .catch((err) => {
+          console.log("Error: ", err);
+          const errorDescription = err.response.data.message;
+          setErrorMessage(errorDescription);
+        });
     } else if (props.submit === "update") {
       const id = props.id;
       axios
         .put(`${process.env.REACT_APP_API_URL}/exercises/${id}`, {
           name: props.name,
           type: props.type,
+          muscle: props.muscle,
           description: props.description,
         })
         .then(() => {
           props.setUpdateCallback(false);
           props.setValidatedCallback(false);
+          props.setDisplayExerciseCallback(false);
         })
         .catch((err) => console.log("Error: ", err));
     }
   };
   return (
     <>
+      {errorMessage && <h3 className="error-message">{errorMessage}</h3>}
       <Form
         style={{ margin: "0 20%" }}
         noValidate
@@ -118,19 +126,21 @@ function ExerciseForm(props) {
             size="2"
             aria-label="Default select example"
             name="muscle"
-            value={muscle}
-            onChange={(e) => setMuscle(e.target.value)}
+            value={props.muscle}
+            onChange={(e) => props.setMuscleCallback(e.target.value)}
           >
             <option value={""}>Open this select menu</option>
-            {props.muscles && props.muscles.map((element) => (<>
-              <option key={element._id} value={element.name}>
-                {element.name
-                  .split("_")
-                  .map((e) => e.charAt().toUpperCase() + e.slice(1))
-                  .join(" ")}
-              </option>
-            </>
-            ))}
+            {props.muscles &&
+              props.muscles.map((element) => (
+                <>
+                  <option key={element._id} value={element.name}>
+                    {element.name
+                      .split("_")
+                      .map((e) => e.charAt().toUpperCase() + e.slice(1))
+                      .join(" ")}
+                  </option>
+                </>
+              ))}
           </Form.Select>
         </FloatingLabel>
         <br />
@@ -148,16 +158,14 @@ function ExerciseForm(props) {
             value={props.description}
             onChange={(e) => props.setDescriptionCallback(e.target.value)}
           />
+
           <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
           <Form.Control.Feedback type="invalid">
             Please provide instructions
           </Form.Control.Feedback>
         </FloatingLabel>
         <br />
-        <Button
-          type="submit"
-          style={{ width: "30%", "margin-bottom": "30px" }}
-        >
+        <Button type="submit" style={{ width: "30%", "margin-bottom": "30px" }}>
           {props.buttonName}
         </Button>
       </Form>

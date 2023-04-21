@@ -29,6 +29,7 @@ function ExerciseDetail(props) {
         setExercise(response.data);
         setName(response.data.name);
         setType(response.data.type);
+        props.setMuscleCallback(response.data.muscle);
         setDescription(response.data.description);
       })
       .catch((error) => {
@@ -87,11 +88,15 @@ function ExerciseDetail(props) {
                 setTypeCallback={setType}
                 description={description}
                 setDescriptionCallback={setDescription}
+                muscle={props.muscle}
+                setMuscleCallback={props.setMuscleCallback}
                 validated={validated}
                 setValidatedCallback={setValidated}
                 muscles={props.muscles}
                 setMusclesCallback={props.setMusclesCallback}
                 setUpdateCallback={setUpdate}
+                setDisplayCreateExerciseCallback={props.setDisplayCreateExercise}
+                setDisplayExerciseCallback={props.setDisplayExerciseCallback}
                 buttonName={"Update"}
                 submit={"update"}
               />
