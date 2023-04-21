@@ -88,15 +88,21 @@ function ExerciseCard(props) {
         <div
           style={{
             display: "grid",
-            "place-items" : "center",
+            "place-items": "center",
             height: "10rem",
           }}
         >
           <Card.Body>
-            <Card.Title><h3>{props.exercises.name}</h3></Card.Title> <br />
+            <Card.Title>
+              <h3>{props.exercises.name}</h3>
+            </Card.Title>{" "}
+            <br />
           </Card.Body>
           <Card.Body>
-            <Card.Subtitle>Created by <span style={{color:"rgb(240,100,80)"}}>{user.name}</span></Card.Subtitle>
+            <Card.Subtitle>
+              Created by{" "}
+              <span style={{ color: "rgb(240,100,80)" }}>{user.name}</span>
+            </Card.Subtitle>
           </Card.Body>
         </div>
       </Card>
