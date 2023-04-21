@@ -1,10 +1,9 @@
 # FITNESS APP 
 This fitness app provides a variety of features to help you achieve your fitness goals, such as workout tracking, exercise libraries, and personalized routines. It offers a user-friendly interface and can be customized based on your fitness level and preferences.
-## this is the REACT FRONTEND Component of this Fitness App
-
+## REACT FRONTEND
 This is the frontend repository for a fitness app built with React. It contains the React components and UI elements that make up the user interface of the app.
 
-## Discover the EXPRESS BACKEND Component of this Fitness App
+## Discover the EXPRESS BACKEND 
 The backend of this fitness app uses the Express framework to handle requests, process data, and communicate with the database.
 
 Link to Server repo [BackEnd](https://github.com/Alex-Eric/fitness-app-server)
